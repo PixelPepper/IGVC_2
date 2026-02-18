@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  
+  <xacro:macro name="simple_rgb_camera" params="name parent *origin">
+    
+    <!-- Camera Link -->
+    <joint name="${name}_joint" type="fixed">
+      <xacro:insert_block name="origin"/>
+      <parent link="${parent}"/>
+      <child link="${name}_link"/>
+    </joint>
+    
+    <link name="${name}_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.025 0.090 0.025"/>
+        </geometry>
+        <material name="dark_grey">
+          <color rgba="0.3 0.3 0.3 1.0"/>
+        </material>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.025 0.090 0.025"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <mass value="0.02"/>
+        <inertia ixx="0.00001" ixy="0.0" ixz="0.0" iyy="0.00001" iyz="0.0" izz="0.00001"/>
+      </inertial>
+    </link>
+    
+    <!-- Camera Frame -->
+    <joint name="${name}_camera_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="${name}_link"/>
+      <child link="${name}_camera_frame"/>
+    </joint>
+    
+    <link name="${name}_camera_frame"/>
+    
+    <!-- Camera Optical Frame (ROS convention) -->
+    <joint name="${name}_optical_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="${-pi/2} 0 ${-pi/2}"/>
+      <parent link="${name}_camera_frame"/>
+      <child link="${name}_camera_optical_frame"/>
+    </joint>
+    
+    <link name="${name}_camera_optical_frame"/>
+    
+    <!-- Gazebo RGB Camera Plugin -->
+    <gazebo reference="${name}_link">
+      <sensor type="camera" name="${name}_camera">
+        <update_rate>15.0</update_rate>
+        <camera name="${name}">
+          <horizontal_fov>1.396</horizontal_fov> <!-- 80 degrees - wide FOV -->
+          <image>
+            <width>640</width>
+            <height>480</height>
+            <format>R8G8B8</format>
+          </image>
+          <clip>
+            <near>0.1</near>
+            <far>100</far>
+          </clip>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.007</stddev>
+          </noise>
+        </camera>
+        <plugin name="${name}_camera_controller" filename="libgazebo_ros_camera.so">
+          <frame_name>${name}_camera_optical_frame</frame_name>
+          <camera_name>${name}</camera_name>
+          <image_topic_name>image_raw</image_topic_name>
+          <camera_info_topic_name>camera_info</camera_info_topic_name>
+        </plugin>
+      </sensor>
+    </gazebo>
+    
+  </xacro:macro>
+  
+</robot>

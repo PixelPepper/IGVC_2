@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="params_file" default="/home/tech/IGVC_SIM/nav2_params_no_map.yaml"/>
+  <arg name="autostart" default="true"/>
+  
+  <!-- Navigation2 - Local Costmap Only Mode -->
+  <node pkg="nav2_controller" exec="controller_server" output="screen">
+    <param name="use_sim_time" value="$(var use_sim_time)"/>
+    <param from="$(var params_file)"/>
+  </node>
+
+  <node pkg="nav2_planner" exec="planner_server" output="screen">
+    <param name="use_sim_time" value="$(var use_sim_time)"/>
+    <param from="$(var params_file)"/>
+  </node>
+
+  <node pkg="nav2_behaviors" exec="behavior_server" output="screen">
+    <param name="use_sim_time" value="$(var use_sim_time)"/>
+    <param from="$(var params_file)"/>
+  </node>
+
+  <node pkg="nav2_bt_navigator" exec="bt_navigator" output="screen">
+    <param name="use_sim_time" value="$(var use_sim_time)"/>
+    <param from="$(var params_file)"/>
+  </node>
+
+  <node pkg="nav2_lifecycle_manager" exec="lifecycle_manager" name="lifecycle_manager_navigation" output="screen">
+    <param name="use_sim_time" value="$(var use_sim_time)"/>
+    <param name="autostart" value="$(var autostart)"/>
+    <param name="node_names" value="['controller_server', 'planner_server', 'behavior_server', 'bt_navigator']"/>
+  </node>
+</launch>

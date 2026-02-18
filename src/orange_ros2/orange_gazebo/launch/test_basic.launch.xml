@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="use_sim_time" default="true"/>
+  
+  <!-- Start Gazebo with default empty world -->
+  <include file="$(find-pkg-share gazebo_ros)/launch/gazebo.launch.py">
+    <arg name="use_sim_time" value="$(var use_sim_time)"/>
+  </include>
+  
+  <!-- robot_state_publisher -->
+  <node pkg="robot_state_publisher" exec="robot_state_publisher">
+    <param name="use_sim_time" value="$(var use_sim_time)"/>
+    <param name="robot_description" value="$(command 'xacro $(find-pkg-share orange_description)/xacro/orange_robot_simulation.xacro')"/>
+  </node>
+  
+  <!-- spawn_entity -->
+  <node pkg="gazebo_ros" exec="spawn_entity.py" args="-entity orange_robot -topic /robot_description">
+    <param name="use_sim_time" value="$(var use_sim_time)"/>
+  </node>
+</launch>

@@ -1,0 +1,160 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!--
+  OAK-D Pro Camera Sensor
+  Emulates Luxonis OAK-D Pro with RGB camera and stereo depth
+  -->
+  
+  <xacro:macro name="oak_d_pro" params="name parent *origin">
+    
+    <!-- OAK-D Pro Base Link -->
+    <joint name="${name}_joint" type="fixed">
+      <xacro:insert_block name="origin"/>
+      <parent link="${parent}"/>
+      <child link="${name}_link"/>
+    </joint>
+    
+    <link name="${name}_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.097 0.0275 0.0275"/>
+        </geometry>
+        <material name="oak_gray">
+          <color rgba="0.3 0.3 0.3 1.0"/>
+        </material>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.097 0.0275 0.0275"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <mass value="0.06"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <inertia ixx="0.00001" ixy="0.0" ixz="0.0" iyy="0.00001" iyz="0.0" izz="0.00001"/>
+      </inertial>
+    </link>
+    
+    <!-- RGB Camera Link (Center) -->
+    <joint name="${name}_rgb_joint" type="fixed">
+      <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+      <parent link="${name}_link"/>
+      <child link="${name}_rgb_camera_frame"/>
+    </joint>
+    
+    <link name="${name}_rgb_camera_frame"/>
+    
+    <!-- RGB Camera Optical Frame -->
+    <joint name="${name}_rgb_optical_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="${-pi/2} 0 ${-pi/2}"/>
+      <parent link="${name}_rgb_camera_frame"/>
+      <child link="${name}_rgb_camera_optical_frame"/>
+    </joint>
+    
+    <link name="${name}_rgb_camera_optical_frame"/>
+    
+    <!-- Left Stereo Camera -->
+    <joint name="${name}_left_joint" type="fixed">
+      <origin xyz="0.0 0.0375 0.0" rpy="0 0 0"/>
+      <parent link="${name}_link"/>
+      <child link="${name}_left_camera_frame"/>
+    </joint>
+    
+    <link name="${name}_left_camera_frame"/>
+    
+    <joint name="${name}_left_optical_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="${-pi/2} 0 ${-pi/2}"/>
+      <parent link="${name}_left_camera_frame"/>
+      <child link="${name}_left_camera_optical_frame"/>
+    </joint>
+    
+    <link name="${name}_left_camera_optical_frame"/>
+    
+    <!-- Right Stereo Camera -->
+    <joint name="${name}_right_joint" type="fixed">
+      <origin xyz="0.0 -0.0375 0.0" rpy="0 0 0"/>
+      <parent link="${name}_link"/>
+      <child link="${name}_right_camera_frame"/>
+    </joint>
+    
+    <link name="${name}_right_camera_frame"/>
+    
+    <joint name="${name}_right_optical_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="${-pi/2} 0 ${-pi/2}"/>
+      <parent link="${name}_right_camera_frame"/>
+      <child link="${name}_right_camera_optical_frame"/>
+    </joint>
+    
+    <link name="${name}_right_camera_optical_frame"/>
+    
+    <!-- Gazebo RGB Camera Plugin -->
+    <gazebo reference="${name}_rgb_camera_frame">
+      <sensor type="camera" name="${name}_rgb_camera">
+        <update_rate>30.0</update_rate>
+        <camera name="${name}_rgb">
+          <horizontal_fov>1.2217</horizontal_fov>
+          <image>
+            <!-- Reduced resolution for smoother performance (was 1920x1080) -->
+            <width>640</width>
+            <height>480</height>
+            <format>R8G8B8</format>
+          </image>
+          <clip>
+            <near>0.1</near>
+            <far>100</far>
+          </clip>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.007</stddev>
+          </noise>
+        </camera>
+        <plugin name="${name}_rgb_camera_controller" filename="libgazebo_ros_camera.so">
+          <frame_name>${name}_rgb_camera_optical_frame</frame_name>
+          <camera_name>oak/rgb</camera_name>
+          <image_topic_name>image_raw</image_topic_name>
+          <camera_info_topic_name>camera_info</camera_info_topic_name>
+          <hack_baseline>0.07</hack_baseline>
+        </plugin>
+      </sensor>
+    </gazebo>
+    
+    <!-- Gazebo Depth Camera Plugin (Stereo as RGB-D) -->
+    <gazebo reference="${name}_left_camera_frame">
+      <sensor type="depth" name="${name}_depth_camera">
+        <update_rate>30.0</update_rate>
+        <camera name="${name}_depth">
+          <horizontal_fov>1.2217</horizontal_fov>
+          <image>
+            <width>640</width>
+            <height>400</height>
+            <format>R8G8B8</format>
+          </image>
+          <clip>
+            <near>0.2</near>
+            <far>20.0</far>
+          </clip>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.01</stddev>
+          </noise>
+        </camera>
+        <plugin name="${name}_depth_camera_controller" filename="libgazebo_ros_camera.so">
+          <frame_name>${name}_left_camera_optical_frame</frame_name>
+          <camera_name>oak/stereo</camera_name>
+          <image_topic_name>image_raw</image_topic_name>
+          <camera_info_topic_name>camera_info</camera_info_topic_name>
+          <depth_image_topic_name>depth/image_raw</depth_image_topic_name>
+          <depth_image_camera_info_topic_name>depth/camera_info</depth_image_camera_info_topic_name>
+          <point_cloud_topic_name>points</point_cloud_topic_name>
+          <point_cloud_cutoff>0.2</point_cloud_cutoff>
+          <point_cloud_cutoff_max>20.0</point_cloud_cutoff_max>
+        </plugin>
+      </sensor>
+    </gazebo>
+    
+  </xacro:macro>
+</robot>

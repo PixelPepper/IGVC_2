@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <arg name="port" default="/dev/ttyACM0" />
+  <arg name="baudrate" default="115200" />
+  <arg name="time_out" default="500" />
+  <arg name="serial_interval" default="0.01" />
+  <arg name="input_topic" default="/cmd_vel/raw" />
+  <arg name="output_topic" default="/cmd_vel/override" />
+
+  <node pkg="estop_ros" exec="cmd_vel_override_node" output="screen">
+    <param name="port" value="$(var port)" />
+    <param name="baudrate" value="$(var baudrate)" />
+    <param name="time_out" value="$(var time_out)" />
+    <param name="serial_interval" value="$(var serial_interval)" />
+    <param name="input_topic" value="$(var input_topic)" />
+    <param name="output_topic" value="$(var output_topic)" />
+  </node>
+</launch>
