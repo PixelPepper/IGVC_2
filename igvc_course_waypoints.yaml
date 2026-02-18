@@ -1,0 +1,39 @@
+# IGVC Course Waypoints
+# These are the actual waypoints for the IGVC course in Gazebo
+
+waypoints:
+  - name: "Waypoint 1"
+    x: -15.897553
+    y: 30.531566
+    z: 0.0
+    yaw: 0.0
+    
+  - name: "Waypoint 2"
+    x: -6.689831
+    y: 30.585056
+    z: 0.0
+    yaw: 0.0
+    
+  - name: "Waypoint 3"
+    x: 4.735314
+    y: 30.745592
+    z: 0.0
+    yaw: 0.0
+    
+  - name: "Waypoint 4"
+    x: 14.032318
+    y: 30.432041
+    z: 0.0
+    yaw: 0.0
+    
+  - name: "Return to Start"
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    yaw: 0.0
+
+# Navigation notes:
+# - All waypoints are in the 'odom' frame
+# - Robot will avoid obstacles using LiDAR + depth camera
+# - Robot will detect and avoid crossing lane boundaries
+# - Yaw is set to 0.0 (robot chooses best orientation automatically)

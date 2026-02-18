@@ -1,0 +1,33 @@
+# ROS2 / colcon
+/build/
+/install/
+/log/
+*.pyc
+__pycache__/
+
+# IDE / Editor
+.vscode/
+.idea/
+.cursor/
+*.swp
+*.swo
+*~
+
+# OS / Misc
+.DS_Store
+Thumbs.db
+Untitled
+
+# Gazebo
+.gazebo/
+*.log
+
+# Python
+*.egg-info/
+.eggs/
+dist/
+
+# Build artifacts
+*.o
+*.a
+*.so
