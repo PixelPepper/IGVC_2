@@ -75,6 +75,8 @@ git clone https://github.com/PixelPepper/IGVC_2.git
 cd IGVC_2
 ```
 
+The repository is self-contained (no submodules).
+
 ### 2. Workspace path
 
 `setup_orange.sh` auto-detects the workspace from its location—no path edits needed. Just `cd` into your clone directory before sourcing.
