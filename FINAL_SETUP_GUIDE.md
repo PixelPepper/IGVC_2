@@ -1,5 +1,7 @@
 # 🏁 Complete IGVC Autonomous Navigation Setup
 
+**Clone as `IGVC_2`** (or any name). Replace `<workspace>` in commands with your actual path (e.g. `~/IGVC_2`).
+
 ## 🆕 Latest Updates (2026-02-11)
 
 ### Lane Detection System - FULLY OPERATIONAL! ✅
@@ -43,7 +45,7 @@ sleep 2
 ### Step 1: TERMINAL 1 - Launch Gazebo
 
 ```bash
-cd ~/IGVC_SIM
+cd <workspace>   # e.g. cd ~/IGVC_2 (replace with your clone path)
 source setup_orange.sh
 ros2 launch orange_gazebo orange_igvc_simple.launch.xml
 ```
@@ -64,7 +66,7 @@ DISPLAY=:0 gzclient &
 **NEW terminal:**
 
 ```bash
-cd ~/IGVC_SIM
+cd <workspace>   # e.g. cd ~/IGVC_2 (replace with your clone path)
 source setup_orange.sh
 ros2 launch orange_gazebo igvc_perception_full.launch.xml
 ```
@@ -75,9 +77,7 @@ ros2 launch orange_gazebo igvc_perception_full.launch.xml
 [lane_detector]: Camera intrinsics received
 [lane_detector]: 📸 Receiving images: 640x480
 [lane_detector]: ✓ Detected 2466 lane wall points    <-- LANES DETECTED!
-[pointcloud_fusion]: Point Cloud Fusion inicd ~/IGVC_SIM
-source setup_orange.sh
-ros2 launch orange_gazebo igvc_perception_full.launch.xmltialized
+[pointcloud_fusion]: Point Cloud Fusion initialized
 [local_costmap]: Subscribed to Topics: fused_scan lane_cloud    <-- BOTH sensors!
 [lifecycle_manager_navigation]: Managed nodes are active
 ```
@@ -99,7 +99,7 @@ ros2 launch orange_gazebo igvc_perception_full.launch.xmltialized
 **NEW terminal:**
 
 ```bash
-cd ~/IGVC_SIM
+cd <workspace>   # e.g. cd ~/IGVC_2 (replace with your clone path)
 source setup_orange.sh
 
 # Test with first waypoint
@@ -119,7 +119,7 @@ source setup_orange.sh
 **After test works, run full course in NEW terminal:**
 
 ```bash
-cd ~/IGVC_SIM
+cd <workspace>   # e.g. cd ~/IGVC_2 (replace with your clone path)
 ./run_igvc_course.sh
 ```
 
@@ -145,7 +145,7 @@ Goal accepted! Robot navigating...
 **OPTION A - Pre-configured RViz (RECOMMENDED):**
 
 ```bash
-cd ~/IGVC_SIM
+cd <workspace>   # e.g. cd ~/IGVC_2 (replace with your clone path)
 ./launch_rviz_perception.sh
 ```
 
@@ -154,7 +154,7 @@ This launches RViz with all displays pre-configured!
 **OPTION B - Manual RViz Launch:**
 
 ```bash
-cd ~/IGVC_SIM
+cd <workspace>   # e.g. cd ~/IGVC_2 (replace with your clone path)
 source setup_orange.sh
 ros2 launch orange_bringup rviz2.launch.xml
 ```
@@ -245,7 +245,7 @@ Then manually configure:
 
 ### Check All Sensors Working
 ```bash
-cd ~/IGVC_SIM
+cd <workspace>   # e.g. cd ~/IGVC_2 (replace with your clone path)
 source setup_orange.sh
 
 # Should all show positive Hz rates
@@ -390,7 +390,7 @@ DISPLAY=:0 gzclient &
 If you only see `fused_scan`, the config didn't load properly:
 ```bash
 # Stop Terminal 2 (Ctrl+C), then restart:
-cd ~/IGVC_SIM
+cd <workspace>   # e.g. cd ~/IGVC_2 (replace with your clone path)
 source setup_orange.sh
 ros2 launch orange_gazebo igvc_perception_full.launch.xml
 ```
@@ -406,15 +406,15 @@ ros2 launch orange_gazebo igvc_perception_full.launch.xml
 **Start Everything:**
 ```bash
 # Terminal 1
-cd ~/IGVC_SIM && source setup_orange.sh
+cd <workspace>   # e.g. cd ~/IGVC_2 (replace with your clone path) && source setup_orange.sh
 ros2 launch orange_gazebo orange_igvc_simple.launch.xml
 
 # Terminal 2
-cd ~/IGVC_SIM && source setup_orange.sh
+cd <workspace>   # e.g. cd ~/IGVC_2 (replace with your clone path) && source setup_orange.sh
 ros2 launch orange_gazebo igvc_perception_full.launch.xml
 
 # Terminal 3 (after 20 seconds)
-cd ~/IGVC_SIM && ./run_igvc_course.sh
+cd <workspace>   # e.g. cd ~/IGVC_2 (replace with your clone path) && ./run_igvc_course.sh
 ```
 
 **Stop Everything:**
@@ -471,7 +471,7 @@ Before starting navigation, verify all systems are operational:
 
 **Quick Sensor Test (New Terminal):**
 ```bash
-cd ~/IGVC_SIM
+cd <workspace>   # e.g. cd ~/IGVC_2 (replace with your clone path)
 source setup_orange.sh
 
 # All should return data
@@ -498,7 +498,7 @@ All waypoints are configured. Follow the steps above to start!
 
 **Run the Course:**
 ```bash
-cd ~/IGVC_SIM
+cd <workspace>   # e.g. cd ~/IGVC_2 (replace with your clone path)
 ./run_igvc_course.sh
 ```
 

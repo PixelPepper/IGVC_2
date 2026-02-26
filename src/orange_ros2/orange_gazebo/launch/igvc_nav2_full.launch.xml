@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
   <arg name="use_sim_time" default="true"/>
-  <arg name="params_file" default="/home/tech/IGVC_SIM/nav2_params_no_map.yaml"/>
+  <arg name="params_file" default="$(find-pkg-share orange_gazebo)/config/nav2_params_no_map.yaml"/>
   <arg name="autostart" default="true"/>
   
   <!-- Navigation2 - Local Costmap Only Mode -->

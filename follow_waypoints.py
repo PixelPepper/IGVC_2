@@ -11,8 +11,11 @@ class WaypointFollower(Node):
     def __init__(self):
         super().__init__('waypoint_follower')
         
-        # Load waypoints
-        with open('/home/tech/IGVC_SIM/waypoints.yaml', 'r') as f:
+        # Load waypoints (path relative to script - works regardless of clone location)
+        import os
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        waypoints_path = os.path.join(script_dir, 'waypoints.yaml')
+        with open(waypoints_path, 'r') as f:
             data = yaml.safe_load(f)
             self.waypoints = data['waypoints']
         

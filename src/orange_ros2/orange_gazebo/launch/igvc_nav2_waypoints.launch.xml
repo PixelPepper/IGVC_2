@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
   <arg name="use_sim_time" default="true"/>
-  <arg name="waypoints_file" default="/home/tech/IGVC_SIM/igvc_waypoints.yaml"/>
+  <arg name="waypoints_file" default="$(find-pkg-share orange_gazebo)/config/waypoints/igvc_waypoints.yaml"/>
   <arg name="params_file" default="$(find-pkg-share orange_navigation)/config/navigation2_params.yaml"/>
   
   <!-- Navigation2 Stack -->

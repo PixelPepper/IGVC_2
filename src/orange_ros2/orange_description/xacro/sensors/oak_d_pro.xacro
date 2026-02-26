@@ -16,11 +16,11 @@
     
     <link name="${name}_link">
       <visual>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <origin xyz="0 1 3" rpy="0 0 0"/>camera
         <geometry>
           <box size="0.097 0.0275 0.0275"/>
-        </geometry>
-        <material name="oak_gray">
+        </geometry>camera
+        <material name="oak_gcameraray">
           <color rgba="0.3 0.3 0.3 1.0"/>
         </material>
       </visual>

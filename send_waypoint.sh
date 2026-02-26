@@ -12,7 +12,8 @@ X=$1
 Y=$2
 YAW=${3:-0.0}
 
-cd ~/IGVC_SIM
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "$SCRIPT_DIR"
 source setup_orange.sh
 
 echo "Sending waypoint: x=$X, y=$Y, yaw=$YAW"

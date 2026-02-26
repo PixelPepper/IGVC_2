@@ -30,7 +30,7 @@
   <xacro:oak_d_pro name="oak" parent="base_link">
     <!-- Mounted flush with pole - same height (1.0m), brought back in x -->
     <!-- Height: 1.0m, x=0.0 (flush with pole), Pitch: +0.52 rad (+30°) to see ground -->
-    <origin xyz="0.0 0.0 1.0" rpy="0.0 0.52 0.0"/>
+    <origin xyz="0.0 0.0 3.0" rpy="0.0 0.52 0.0"/>
   </xacro:oak_d_pro>
 
   <!--base footprint-->

@@ -24,7 +24,7 @@ cat << 'EOF'
 ═══════════════════════════════════════════════════════════════
 STEP 2: TERMINAL 1 - Launch Gazebo Simulation
 ═══════════════════════════════════════════════════════════════
-cd ~/IGVC_SIM
+cd $WORKSPACE
 source setup_orange.sh
 ros2 launch orange_gazebo orange_igvc_simple.launch.xml
 
@@ -33,7 +33,7 @@ Wait for: "Successfully spawned entity [orange_robot]"
 ═══════════════════════════════════════════════════════════════
 STEP 3: TERMINAL 2 - Launch Perception + Nav2
 ═══════════════════════════════════════════════════════════════
-cd ~/IGVC_SIM
+cd $WORKSPACE
 source setup_orange.sh
 ros2 launch orange_gazebo igvc_perception_full.launch.xml
 
@@ -45,7 +45,7 @@ Wait 15-20 seconds for:
 ═══════════════════════════════════════════════════════════════
 STEP 4: TERMINAL 3 - Launch RViz (Optional)
 ═══════════════════════════════════════════════════════════════
-cd ~/IGVC_SIM
+cd $WORKSPACE
 source setup_orange.sh
 ros2 launch orange_bringup rviz2.launch.xml
 
@@ -60,7 +60,7 @@ RViz Config:
 ═══════════════════════════════════════════════════════════════
 STEP 5: TERMINAL 4 - Start Autonomous Course
 ═══════════════════════════════════════════════════════════════
-cd ~/IGVC_SIM
+cd $WORKSPACE
 ./run_igvc_course.sh
 
 Watch the robot:

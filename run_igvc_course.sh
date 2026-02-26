@@ -1,8 +1,10 @@
 #!/bin/bash
 # Run IGVC Course Navigation
 # This script sends the robot through the entire course automatically
+# Works regardless of clone location (e.g. IGVC_2, IGVC_SIM, ~/projects/IGVC_2)
 
-cd ~/IGVC_SIM
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "$SCRIPT_DIR"
 source setup_orange.sh
 
 echo "================================"

@@ -35,7 +35,7 @@ sleep 2
 
 ### Step 1: Launch Simulation (Terminal 1)
 ```bash
-cd ~/IGVC_SIM
+cd ~/IGVC_2   # or your clone directory
 source setup_orange.sh
 ros2 launch orange_gazebo orange_igvc_simple.launch.xml
 ```
@@ -46,7 +46,7 @@ ros2 launch orange_gazebo orange_igvc_simple.launch.xml
 
 ### Step 2: Launch Perception + Nav2 (Terminal 2)
 ```bash
-cd ~/IGVC_SIM
+cd ~/IGVC_2   # or your clone directory
 source setup_orange.sh
 ros2 launch orange_gazebo igvc_perception_full.launch.xml
 ```
@@ -67,7 +67,7 @@ ros2 launch orange_gazebo igvc_perception_full.launch.xml
 
 ### Step 3: Launch RViz (Terminal 3 - Optional)
 ```bash
-cd ~/IGVC_SIM
+cd ~/IGVC_2   # or your clone directory
 source setup_orange.sh
 ros2 launch orange_bringup rviz2.launch.xml
 ```
@@ -87,7 +87,7 @@ ros2 launch orange_bringup rviz2.launch.xml
 
 ### Step 4: Start Autonomous Navigation
 ```bash
-cd ~/IGVC_SIM
+cd ~/IGVC_2   # or your clone directory
 ./run_igvc_course.sh
 ```
 
@@ -122,7 +122,7 @@ Result: `/fused_cloud` contains all obstacle information
 
 ### Check All Sensors
 ```bash
-source ~/IGVC_SIM/setup_orange.sh
+source ~/IGVC_2/setup_orange.sh   # or your clone path
 
 # Check camera is publishing
 ros2 topic hz /oak/rgb/image_raw
@@ -138,7 +138,7 @@ ros2 topic hz /fused_scan
 
 ### View Camera Feed
 ```bash
-source ~/IGVC_SIM/setup_orange.sh
+source ~/IGVC_2/setup_orange.sh   # or your clone path
 ros2 run rqt_image_view rqt_image_view /oak/rgb/image_raw
 ```
 
@@ -153,7 +153,7 @@ ros2 run rqt_image_view rqt_image_view /lane_debug
 
 ### Check Point Cloud Fusion
 ```bash
-source ~/IGVC_SIM/setup_orange.sh
+source ~/IGVC_2/setup_orange.sh   # or your clone path
 
 # See number of points being fused
 ros2 topic echo /fused_cloud --field width

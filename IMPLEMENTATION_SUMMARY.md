@@ -189,7 +189,7 @@ fused_scan:
 pkill -9 gzserver; pkill -9 gzclient; sleep 2
 
 # 2. Terminal 1: Simulation
-cd ~/IGVC_SIM
+cd ~/IGVC_2   # or your clone directory
 source setup_orange.sh
 ros2 launch orange_gazebo orange_igvc_simple.launch.xml
 
@@ -204,7 +204,7 @@ source setup_orange.sh
 
 ### Quick Start
 ```bash
-cd ~/IGVC_SIM
+cd ~/IGVC_2   # or your clone directory
 ./QUICKSTART_PERCEPTION.sh
 # Then follow the printed instructions
 ```

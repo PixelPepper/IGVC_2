@@ -1,7 +1,9 @@
 #!/bin/bash
 # Launch RViz with pre-configured IGVC Perception displays
+# Works regardless of clone location (e.g. IGVC_2, IGVC_SIM)
 
-cd ~/IGVC_SIM
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "$SCRIPT_DIR"
 source setup_orange.sh
 
 echo "Launching RViz with IGVC Perception configuration..."
@@ -19,4 +21,4 @@ echo ""
 echo "Fixed Frame: odom"
 echo ""
 
-rviz2 -d ~/IGVC_SIM/igvc_perception.rviz
+rviz2 -d "$SCRIPT_DIR/igvc_perception.rviz"

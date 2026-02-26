@@ -1,0 +1,15 @@
+waypoints:
+# IGVC course waypoints - adjust these based on your course layout
+- point: {x: 2.0, y: 0.0, z: 0.0, vel: 0.8, rad: 0.5, stop: false}
+- point: {x: 4.0, y: 0.5, z: 0.0, vel: 0.8, rad: 0.5, stop: false}
+- point: {x: 6.0, y: 0.0, z: 0.0, vel: 0.8, rad: 0.5, stop: false}
+- point: {x: 8.0, y: -0.5, z: 0.0, vel: 0.8, rad: 0.5, stop: false}
+- point: {x: 10.0, y: 0.0, z: 0.0, vel: 0.8, rad: 0.5, stop: false}
+- point: {x: 12.0, y: 0.5, z: 0.0, vel: 0.8, rad: 0.5, stop: false}
+- point: {x: 14.0, y: 0.0, z: 0.0, vel: 0.8, rad: 0.5, stop: false}
+- point: {x: 16.0, y: 0.0, z: 0.0, vel: 0.5, rad: 0.5, stop: true}
+finish_pose:
+  header: {seq: 0, stamp: 0.0, frame_id: odom}
+  pose:
+    position: {x: 16.0, y: 0.0, z: 0.0}
+    orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}

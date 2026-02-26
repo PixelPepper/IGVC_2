@@ -1,9 +1,13 @@
 #!/bin/bash
 # Orange ROS2 Workspace Setup Script
 # Works from any directory - detects workspace from script location
+# Clone as IGVC_2 (or any name) - this script auto-detects the workspace root
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 WORKSPACE_ROOT="$(cd "$SCRIPT_DIR" && pwd)"
+
+# Export for scripts/launches that need workspace path (portable - works for any clone location)
+export IGVC_WORKSPACE="$WORKSPACE_ROOT"
 
 # Source ROS2 Humble
 source /opt/ros/humble/setup.bash

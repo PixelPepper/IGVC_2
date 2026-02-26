@@ -4,7 +4,7 @@
 
 ### Terminal 1: Launch Gazebo Simulation
 ```bash
-cd ~/IGVC_SIM
+cd ~/IGVC_2   # or your clone directory
 source setup_orange.sh
 ros2 launch orange_gazebo orange_igvc_simple.launch.xml
 ```
@@ -20,11 +20,11 @@ ros2 launch orange_gazebo orange_igvc_simple.launch.xml
 
 ### Terminal 2: Launch Autonomous Navigation
 ```bash
-cd ~/IGVC_SIM
+cd ~/IGVC_2   # or your clone directory
 source setup_orange.sh
 ros2 launch waypoint_navigation waypoint_nav.launch.xml \
   use_sim_time:=true \
-  waypoints_file:=/home/tech/IGVC_SIM/igvc_waypoints.yaml \
+  waypoints_file:=$(ros2 pkg prefix orange_gazebo)/share/orange_gazebo/config/waypoints/igvc_waypoints.yaml \
   world_frame:=odom \
   tandem_scan:=/hokuyo_scan
 ```
@@ -41,7 +41,7 @@ ros2 launch waypoint_navigation waypoint_nav.launch.xml \
 
 ### Terminal 3: Launch RViz2 (Optional - for visualization)
 ```bash
-cd ~/IGVC_SIM
+cd ~/IGVC_2   # or your clone directory
 source setup_orange.sh
 ros2 launch orange_bringup rviz2.launch.xml
 ```
@@ -84,7 +84,7 @@ ros2 launch orange_bringup rviz2.launch.xml
 
 ### Check Robot is Moving
 ```bash
-source ~/IGVC_SIM/setup_orange.sh
+source ~/IGVC_2/setup_orange.sh   # or your clone path
 ros2 topic echo /cmd_vel
 ```
 **Should see:** linear.x and angular.z values changing
@@ -139,7 +139,7 @@ waypoints:
 To drive manually and test/explore the course:
 
 ```bash
-cd ~/IGVC_SIM
+cd ~/IGVC_2   # or your clone directory
 source setup_orange.sh
 ros2 launch orange_teleop teleop_keyboard.launch.xml
 ```
@@ -197,19 +197,19 @@ To create a map while navigating:
 
 **Terminal 2a:** Instead of waypoint navigation, run SLAM:
 ```bash
-source ~/IGVC_SIM/setup_orange.sh
+source ~/IGVC_2/setup_orange.sh   # or your clone path
 ros2 launch orange_slam slam_toolbox.launch.xml use_sim_time:=true
 ```
 
 **Terminal 2b:** Manual teleop to drive around:
 ```bash
-source ~/IGVC_SIM/setup_orange.sh
+source ~/IGVC_2/setup_orange.sh   # or your clone path
 ros2 launch orange_teleop teleop_keyboard.launch.xml
 ```
 
 **Save map:**
 ```bash
-cd ~/IGVC_SIM
+cd ~/IGVC_2   # or your clone directory
 ros2 run nav2_map_server map_saver_cli -f my_igvc_map
 ```
 
@@ -224,10 +224,10 @@ ros2 launch orange_navigation waypoint_navigation.launch.xml \
 
 ## Files Reference
 
-- **Waypoints:** `/home/tech/IGVC_SIM/igvc_waypoints.yaml`
-- **Setup Script:** `/home/tech/IGVC_SIM/setup_orange.sh`
-- **Launch Files:** `/home/tech/IGVC_SIM/install/orange_gazebo/share/orange_gazebo/launch/`
-- **README:** `/home/tech/IGVC_SIM/README.md`
+- **Waypoints:** `install/orange_gazebo/share/orange_gazebo/config/waypoints/igvc_waypoints.yaml`
+- **Setup Script:** `setup_orange.sh` (in workspace root)
+- **Launch Files:** `install/orange_gazebo/share/orange_gazebo/launch/`
+- **README:** `README.md`
 
 ---
 
@@ -238,7 +238,7 @@ ros2 launch orange_navigation waypoint_navigation.launch.xml \
 ~/IGVC_SIM/launch_igvc_full.sh
 
 # Source workspace
-source ~/IGVC_SIM/setup_orange.sh
+source ~/IGVC_2/setup_orange.sh   # or your clone path
 
 # Launch simulation
 ros2 launch orange_gazebo orange_igvc_simple.launch.xml
@@ -246,7 +246,7 @@ ros2 launch orange_gazebo orange_igvc_simple.launch.xml
 # Launch navigation
 ros2 launch waypoint_navigation waypoint_nav.launch.xml \
   use_sim_time:=true \
-  waypoints_file:=/home/tech/IGVC_SIM/igvc_waypoints.yaml \
+  waypoints_file:=$(ros2 pkg prefix orange_gazebo)/share/orange_gazebo/config/waypoints/igvc_waypoints.yaml \
   world_frame:=odom \
   tandem_scan:=/hokuyo_scan
 

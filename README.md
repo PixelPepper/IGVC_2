@@ -2,6 +2,8 @@
 
 Autonomous navigation simulation for the IGVC (Intelligent Ground Vehicle Competition) course using ROS 2 Humble, Gazebo, and Navigation2. Features lane detection, LiDAR obstacle avoidance, and waypoint-based path following.
 
+**Clone from GitHub** → `git clone https://github.com/PixelPepper/IGVC_2.git` → Works from any directory (no hardcoded paths).
+
 ---
 
 ## Features
@@ -79,7 +81,7 @@ The repository is self-contained (no submodules).
 
 ### 2. Workspace path
 
-`setup_orange.sh` auto-detects the workspace from its location—no path edits needed. Just `cd` into your clone directory before sourcing.
+`setup_orange.sh` auto-detects the workspace from its location—no path edits needed. Clone as `IGVC_2` (default) or any name; just `cd` into your clone directory before sourcing.
 
 ### 3. Build the workspace
 
@@ -132,6 +134,22 @@ python3 navigate_igvc_course.py
 
 ---
 
+## Architecture
+
+The system uses a layered ROS 2 architecture:
+
+- **Simulation** (Gazebo) → **Localization** (EKF) → **Perception** (lane detection, fusion) → **Navigation2** → **cmd_vel** → Gazebo
+
+Key topics: `/odom`, `/imu`, `/hokuyo_scan`, `/oak/rgb/image_raw` → EKF and perception → `/fused_scan`, `/lane_cloud` → Nav2 costmaps → `/cmd_vel`.
+
+**Documentation:**
+
+- [**docs/ARCHITECTURE.md**](docs/ARCHITECTURE.md) – In-depth architecture, layers, TF tree, config files
+- [**docs/TOPIC_GRAPH.md**](docs/TOPIC_GRAPH.md) – Mermaid diagram and topic tables
+- [**docs/SETUP_GUIDE.md**](docs/SETUP_GUIDE.md) – Step-by-step setup for new users
+
+---
+
 ## Project Structure
 
 ```
@@ -147,8 +165,12 @@ IGVC_2/
 │   ├── linefit_ground_segmentation_ros2/
 │   ├── velodyne/
 │   └── ...
+├── docs/                      # Architecture and setup documentation
+│   ├── ARCHITECTURE.md        # System design, layers, TF tree
+│   ├── TOPIC_GRAPH.md         # Topic diagram and tables
+│   └── SETUP_GUIDE.md         # New user setup guide
 ├── navigate_igvc_course.py    # Waypoint navigation script
-├── nav2_params_fused.yaml     # Nav2 costmap, planner, controller params
+├── nav2_params_fused.yaml     # (legacy; primary: orange_gazebo/config/)
 ├── igvc_perception.rviz       # RViz config
 ├── setup_orange.sh            # Workspace setup
 ├── FINAL_SETUP_GUIDE.md       # Detailed setup instructions
@@ -160,7 +182,7 @@ IGVC_2/
 ## Configuration
 
 - **Waypoints**: Edit `navigate_igvc_course.py` (`self.waypoints`)
-- **Nav2 params**: `nav2_params_fused.yaml` (costmaps, inflation, goal tolerance)
+- **Nav2 params**: `orange_gazebo/config/nav2_params_fused.yaml` (costmaps, inflation, goal tolerance)
 - **Lane detection**: `orange_perception` (HSV thresholds, morphological ops)
 - **Robot spawn**: `orange_igvc_simple.launch.xml` (position, yaw)
 
