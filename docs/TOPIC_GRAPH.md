@@ -10,20 +10,20 @@ Visual representation of ROS 2 topics and data flow.
 flowchart TB
     subgraph GAZEBO["Gazebo Simulation"]
         GZ[gzserver]
-        GZ --> ODOM[/odom]
-        GZ --> IMU[/imu]
-        GZ --> HOKUYO[/hokuyo_scan]
-        GZ --> RGB[/oak/rgb/image_raw]
-        GZ --> DEPTH[/oak/stereo/points]
-        GZ --> JOINT[/joint_states]
+        GZ --> ODOM["/odom"]
+        GZ --> IMU["/imu"]
+        GZ --> HOKUYO["/hokuyo_scan"]
+        GZ --> RGB["/oak/rgb/image_raw"]
+        GZ --> DEPTH["/oak/stereo/points"]
+        GZ --> JOINT["/joint_states"]
     end
 
     subgraph LOCALIZATION["Localization"]
         EKF[robot_localization EKF]
         ODOM --> EKF
         IMU --> EKF
-        EKF --> FUSION[/fusion/odom]
-        EKF --> TF_ODOM[odom→base_footprint TF]
+        EKF --> FUSION["/fusion/odom"]
+        EKF --> TF_ODOM["odom to base_footprint TF"]
     end
 
     subgraph PERCEPTION["Perception"]
@@ -31,13 +31,13 @@ flowchart TB
         FUSION_NODE[pointcloud_fusion]
         PCL2LASER[pointcloud_to_laserscan]
         RGB --> LANE
-        LANE --> LANE_CLOUD[/lane_cloud]
+        LANE --> LANE_CLOUD["/lane_cloud"]
         HOKUYO --> FUSION_NODE
         DEPTH --> FUSION_NODE
         LANE_CLOUD --> FUSION_NODE
-        FUSION_NODE --> FUSED_CLOUD[/fused_cloud]
+        FUSION_NODE --> FUSED_CLOUD["/fused_cloud"]
         FUSED_CLOUD --> PCL2LASER
-        PCL2LASER --> FUSED_SCAN[/fused_scan]
+        PCL2LASER --> FUSED_SCAN["/fused_scan"]
     end
 
     subgraph NAV2["Navigation2"]
@@ -55,7 +55,7 @@ flowchart TB
         GLOBAL_CM --> PLANNER
         PLANNER --> BT
         CTRL --> BT
-        BT --> CMD[/cmd_vel]
+        BT --> CMD["/cmd_vel"]
     end
 
     subgraph WAYPOINT["Waypoint Script"]
