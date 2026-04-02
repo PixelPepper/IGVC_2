@@ -9,7 +9,7 @@ endif()
 find_package(ament_cmake REQUIRED)
 
 # install
-install(DIRECTORY meshes xacro rviz2
+install(DIRECTORY meshes xacro rviz2 URDF
   DESTINATION share/${PROJECT_NAME}/
 )
 
