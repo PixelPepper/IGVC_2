@@ -1,0 +1,58 @@
+name: ROS 2 Industrial CI
+on:
+  pull_request:
+
+jobs:
+  clang_format_check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
+      - name: run industrial_ci
+        uses: 'ros-industrial/industrial_ci@master'
+        env:
+          ROS_DISTRO: humble
+          CLANG_FORMAT_CHECK: file
+          CLANG_FORMAT_VERSION: "14"
+
+  clang_tidy_check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
+      - name: run industrial_ci
+        uses: 'ros-industrial/industrial_ci@master'
+        env:
+          ROS_DISTRO: humble
+          UPSTREAM_WORKSPACE: estop_ros.rosinstall
+          CLANG_TIDY_ARGS: '--extra-arg=-std=c++17'
+          CLANG_TIDY: pedantic
+
+  build_check:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    strategy:
+      fail-fast: false
+      matrix:
+        env:
+          - ROS_DISTRO: humble
+            ROS_REPO: main
+            UPSTREAM_WORKSPACE: estop_ros.rosinstall
+            IMMEDIATE_TEST_OUTPUT: true
+          - ROS_DISTRO: humble
+            ROS_REPO: testing
+            UPSTREAM_WORKSPACE: estop_ros.rosinstall
+            IMMEDIATE_TEST_OUTPUT: true
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
+      - name: run industrial_ci
+        uses: 'ros-industrial/industrial_ci@master'
+        env: ${{matrix.env}}

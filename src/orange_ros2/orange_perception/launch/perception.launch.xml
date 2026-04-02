@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="debug_viz" default="false"/>
+  
+  <!-- Lane Detection Node - Front Camera Only -->
+  <node pkg="orange_perception" exec="lane_detector" name="lane_detector" output="screen">
+    <param name="use_sim_time" value="$(var use_sim_time)"/>
+    <param name="debug_viz" value="true"/>
+    <param name="min_lane_area" value="50"/>
+    <param name="max_distance" value="10.0"/>
+  </node>
+  
+  <!-- Point Cloud Fusion Node -->
+  <node pkg="orange_perception" exec="pointcloud_fusion" name="pointcloud_fusion" output="screen">
+    <param name="use_sim_time" value="$(var use_sim_time)"/>
+    <param name="output_frame" value="base_link"/>
+    <param name="publish_rate" value="10.0"/>
+    <param name="lane_weight" value="20.0"/>  <!-- Increased from 5.0 - makes lanes HIGH PRIORITY -->
+    <param name="max_range" value="10.0"/>
+  </node>
+  
+  <!-- PointCloud to LaserScan Converter for Nav2 -->
+  <node pkg="pointcloud_to_laserscan" exec="pointcloud_to_laserscan_node" name="fused_pointcloud_to_scan">
+    <param name="use_sim_time" value="$(var use_sim_time)"/>
+    <remap from="cloud_in" to="/fused_cloud"/>
+    <remap from="scan" to="/fused_scan"/>
+    <param name="min_height" value="-0.5"/>
+    <param name="max_height" value="1.0"/>
+    <param name="angle_min" value="-1.5708"/>
+    <param name="angle_max" value="1.5708"/>
+    <param name="angle_increment" value="0.0087"/>
+    <param name="scan_time" value="0.1"/>
+    <param name="range_min" value="0.2"/>
+    <param name="range_max" value="10.0"/>
+    <param name="use_inf" value="true"/>
+  </node>
+  
+  <!-- TF for camera to base_link (static transform publisher) -->
+  <node pkg="tf2_ros" exec="static_transform_publisher" name="oak_to_base_link"
+        args="0.150 0.0 0.200 0 0 0 base_link oak_link"/>
+  
+</launch>

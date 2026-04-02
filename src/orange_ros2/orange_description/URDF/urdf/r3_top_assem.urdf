@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="R3-a (Top_Assem)">
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="0.0374161775948693 -0.00127430901164387 0.0470608642145947"
+        rpy="0 0 0" />
+      <mass
+        value="81.1401446778268" />
+      <inertia
+        ixx="0.728632085236706"
+        ixy="1.32350754415025E-05"
+        ixz="-0.0224859617907878"
+        iyy="1.14289496966326"
+        iyz="-7.48148338622692E-05"
+        izz="1.53133782528775" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://orange_description/URDF/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <!-- Collision: box proxy (29MB STL mesh freezes Gazebo collision pipeline) -->
+    <collision>
+      <origin xyz="-0.136 0 0.10" rpy="0 0 0" />
+      <geometry>
+        <box size="0.82 0.88 0.38" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="wheel_right">
+    <inertial>
+      <origin
+        xyz="1.798E-05 -0.003577 -1.798E-05"
+        rpy="0 0 0" />
+      <mass
+        value="6.0074" />
+      <inertia
+        ixx="0.11314"
+        ixy="-3.6258E-08"
+        ixz="8.1856E-07"
+        iyy="0.20566"
+        iyz="3.6267E-08"
+        izz="0.11314" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://orange_description/URDF/meshes/wheel_right.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="1.5707963267948966 0 0" />
+      <geometry>
+        <cylinder radius="0.20" length="0.10" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="rightWheel"
+    type="continuous">
+    <origin
+      xyz="0.25591 0.40526 -0.07445"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="wheel_right" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      effort="10"
+      velocity="10" />
+    <dynamics
+      damping="0.5"
+      friction="0.5" />
+  </joint>
+  <link
+    name="wheel_left">
+    <inertial>
+      <origin
+        xyz="-1.798E-05 0.003577 -1.798E-05"
+        rpy="0 0 0" />
+      <mass
+        value="6.0074" />
+      <inertia
+        ixx="0.11314"
+        ixy="-3.6258E-08"
+        ixz="-8.1856E-07"
+        iyy="0.20566"
+        iyz="-3.6267E-08"
+        izz="0.11314" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://orange_description/URDF/meshes/wheel_left.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="1.5707963267948966 0 0" />
+      <geometry>
+        <cylinder radius="0.20" length="0.10" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="leftWheel"
+    type="continuous">
+    <origin
+      xyz="0.25591 -0.40525 -0.07445"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="wheel_left" />
+    <axis
+      xyz="0 -1 0" />
+    <limit
+      effort="10"
+      velocity="10" />
+    <dynamics
+      damping="0.5"
+      friction="0.5" />
+  </joint>
+  <link
+    name="right_caster">
+    <inertial>
+      <origin
+        xyz="-0.039652 -5.8101E-05 -0.13418"
+        rpy="0 0 0" />
+      <mass
+        value="1.8501" />
+      <inertia
+        ixx="0.0057433"
+        ixy="2.8684E-08"
+        ixz="-0.00012827"
+        iyy="0.0096143"
+        iyz="8.6762E-08"
+        izz="0.0054708" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://orange_description/URDF/meshes/right_caster.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.08" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="rightCaster"
+    type="continuous">
+    <origin
+      xyz="-0.52775 0.24612 -0.03635"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="right_caster" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      effort="10"
+      velocity="10" />
+    <dynamics
+      damping="0.1"
+      friction="0.1" />
+  </joint>
+  <link
+    name="left_caster">
+    <inertial>
+      <origin
+        xyz="-0.039652 -5.8101E-05 -0.13418"
+        rpy="0 0 0" />
+      <mass
+        value="1.8501" />
+      <inertia
+        ixx="0.0057433"
+        ixy="2.8684E-08"
+        ixz="-0.00012827"
+        iyy="0.0096143"
+        iyz="8.6762E-08"
+        izz="0.0054708" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://orange_description/URDF/meshes/left_caster.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.08" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="leftCaster"
+    type="continuous">
+    <origin
+      xyz="-0.52775 -0.24612 -0.03635"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="left_caster" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      effort="10"
+      velocity="10" />
+    <dynamics
+      damping="0.1"
+      friction="0.1" />
+  </joint>
+</robot>

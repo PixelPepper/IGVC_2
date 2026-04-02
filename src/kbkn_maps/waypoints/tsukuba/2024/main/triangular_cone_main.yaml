@@ -1,0 +1,30 @@
+waypoints:
+- point: {x: 10.765118, y: 2.894459, z: 0, vel: 1, rad: 1.5, stop: true}
+- point: {x: 25.269562, y: 2.553656, z: 0, vel: 1, rad: 1.5, stop: false}
+- point: {x: 45.729114, y: 2.584845, z: 0, vel: 1, rad: 1.5, stop: false}
+- point: {x: 67.560952, y: 2.522468, z: 0, vel: 1, rad: 1.5, stop: false}
+- point: {x: 88.483288, y: 3.381776, z: 0, vel: 1, rad: 1.5, stop: true}
+- point: {x: 105.481124, y: 3.368967, z: 0, vel: 1, rad: 1.5, stop: false}
+- point: {x: 125.415325, y: 2.834351, z: 0, vel: 1, rad: 1.5, stop: false}
+- point: {x: 147.12241, y: 2.803163, z: 0, vel: 1, rad: 1.5, stop: false}
+- point: {x: 169.765146, y: 2.803163, z: 0, vel: 1, rad: 1.5, stop: false}
+- point: {x: 178.996895, y: 2.148208, z: 0, vel: 1, rad: 1.5, stop: false}
+- point: {x: 182.115729, y: -2.59242, z: 0.0, vel: 1.0, rad: 1.0, stop: false}
+- point: {x: 182.427613, y: -6.896411, z: 0, vel: 1, rad: 1.0, stop: false}
+- point: {x: 182.458801, y: -10.919707, z: 0.0, vel: 1.0, rad: 1.0, stop: false}
+- point: {x: 182.443207, y: -15.145727, z: 0.0, vel: 1.0, rad: 1.0, stop: false}
+- point: {x: 182.458801, y: -19.091053, z: 0, vel: 1, rad: 1.0, stop: false}
+- point: {x: 182.458801, y: -22.958407, z: 0.0, vel: 1.0, rad: 1.0, stop: false}
+- point: {x: 182.427613, y: -26.607443, z: 0, vel: 1, rad: 1.0, stop: false}
+- point: {x: 182.412018, y: -29.929001, z: 0.0, vel: 1.0, rad: 1.0, stop: false}
+- point: {x: 182.536772, y: -33.390907, z: 0.0, vel: 1.0, rad: 1.0, stop: false}
+- point: {x: 182.677119, y: -36.743654, z: 0.0, vel: 1.0, rad: 1.0, stop: false}
+- point: {x: 182.708308, y: -40.111994, z: 0.0, vel: 1.0, rad: 1.0, stop: false}
+- point: {x: 182.801873, y: -43.38677, z: 0, vel: 1, rad: 1.0, stop: false}
+- point: {x: 182.801873, y: -46.443228, z: 0, vel: 1, rad: 1.0, stop: false}
+- point: {x: 182.801873, y: -50.248205, z: 0, vel: 1, rad: 1.0, stop: false}
+finish_pose:
+  header: {seq: 1731119338, stamp: 59264922, frame_id: map}
+  pose:
+    position: {x: 182.786278, y: -53.881647, z: 0}
+    orientation: {x: 0.0, y: 0.0, z: -0.696635108359501, w: 0.7174256238809332}

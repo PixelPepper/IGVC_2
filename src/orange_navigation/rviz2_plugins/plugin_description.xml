@@ -1,0 +1,17 @@
+<library path="rviz2_plugins">
+  <class name="rviz2_plugins/StateTriggerPanel"
+         type="rviz2_plugins::StateTriggerPanel"
+         base_class_type="rviz_common::Panel">
+    <description>
+      panel has buttons to start and stop waypoint navigation
+    </description>
+  </class>
+
+  <class name="rviz2_plugins/SetFinishPanel"
+         type="rviz2_plugins::SetFinishPanel"
+         base_class_type="rviz_common::Panel">
+    <description>
+      panel has a button to set finish pose for waypoint_saver
+    </description>
+  </class>
+</library>
