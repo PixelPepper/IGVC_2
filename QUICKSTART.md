@@ -6,7 +6,7 @@
 ```bash
 cd ~/IGVC_2   # or your clone directory
 source setup_orange.sh
-ros2 launch orange_gazebo orange_igvc_simple.launch.xml
+ros2 launch orange_gazebo orange_igvc_simple.launch.py
 ```
 
 **What this does:**
@@ -250,7 +250,7 @@ ros2 launch orange_navigation waypoint_navigation.launch.xml \
 source ./setup_orange.sh
 
 # Launch simulation
-ros2 launch orange_gazebo orange_igvc_simple.launch.xml
+ros2 launch orange_gazebo orange_igvc_simple.launch.py
 
 # Launch navigation
 ros2 launch waypoint_navigation waypoint_nav.launch.xml \

@@ -3,11 +3,12 @@
   <arg name="use_sim_time" default="true"/>
   <arg name="params_file" default="$(find-pkg-share orange_gazebo)/config/nav2_params_fused.yaml"/>
   <arg name="autostart" default="true"/>
+  <arg name="lane_debug_viz" default="true"/>
   
   <!-- Perception Stack (Lane Detection + Point Cloud Fusion) -->
   <include file="$(find-pkg-share orange_perception)/launch/perception.launch.xml">
     <arg name="use_sim_time" value="$(var use_sim_time)"/>
-    <arg name="debug_viz" value="false"/>
+    <arg name="debug_viz" value="$(var lane_debug_viz)"/>
   </include>
   
   <!-- Navigation2 - With Fused Perception -->

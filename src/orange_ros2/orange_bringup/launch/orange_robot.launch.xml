@@ -19,11 +19,11 @@
   <arg name="motor_driver_config_file_path" default="$(find-pkg-share orange_bringup)/config/motor_driver_params.yaml"/>
   <!-- robot_state_publisher -->
   <node pkg="robot_state_publisher" exec="robot_state_publisher">
-    <param name="robot_description" value="$(command 'xacro $(var xacro_file_path)')"/>
+    <param name="robot_description" value="$(command 'xacro $(var xacro_file_path)')" type="str"/>
   </node>
   <!-- joint_state_publisher -->
   <node pkg="joint_state_publisher" exec="joint_state_publisher">
-    <param name="robot_description" value="$(command 'xacro $(var xacro_file_path)')"/>
+    <param name="robot_description" value="$(command 'xacro $(var xacro_file_path)')" type="str"/>
   </node>
   <!-- motor_driver_node -->
   <node pkg="orange_bringup" exec="motor_driver_node" output="screen">

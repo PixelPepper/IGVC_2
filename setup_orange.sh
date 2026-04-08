@@ -25,6 +25,7 @@ export GAZEBO_MASTER_URI=http://localhost:11345
 echo "✓ Orange ROS2 workspace activated!"
 echo ""
 echo "Available launch commands:"
+echo "  ros2 launch orange_gazebo orange_igvc_simple.launch.py    # IGVC simple sim (recommended; clears stale Gazebo)"
 echo "  ros2 launch orange_gazebo empty_world.launch.xml          # Empty world"
 echo "  ros2 launch orange_gazebo orange_world.launch.xml         # Orange world"
 echo "  ros2 launch orange_gazebo orange_igvc.launch.xml          # IGVC world"

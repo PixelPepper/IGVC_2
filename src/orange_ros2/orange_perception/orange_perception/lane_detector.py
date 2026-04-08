@@ -7,6 +7,7 @@ Publishes detected lanes as a point cloud
 
 import rclpy
 from rclpy.node import Node
+from rcl_interfaces.msg import SetParametersResult
 from sensor_msgs.msg import Image, PointCloud2, CameraInfo
 from std_msgs.msg import Header
 from cv_bridge import CvBridge
@@ -27,6 +28,7 @@ class LaneDetector(Node):
         self.debug_viz = self.get_parameter('debug_viz').value
         self.min_lane_area = self.get_parameter('min_lane_area').value
         self.max_distance = self.get_parameter('max_distance').value
+        self.add_on_set_parameters_callback(self.parameters_callback)
         
         # CV Bridge
         self.bridge = CvBridge()
@@ -58,16 +60,35 @@ class LaneDetector(Node):
             10
         )
         
-        if self.debug_viz:
-            self.debug_image_pub = self.create_publisher(
-                Image,
-                '/lane_debug',
-                10
-            )
+        # Always create the publisher so RViz can stay configured on /lane_debug.
+        # The debug_viz parameter only controls whether frames are actually published.
+        self.debug_image_pub = self.create_publisher(
+            Image,
+            '/lane_debug',
+            10
+        )
         
         self.get_logger().info('Lane Detector initialized')
-        self.get_logger().info(f'Subscribed to: /oak/rgb/image_raw')
-        self.get_logger().info(f'Publishing to: /lane_cloud')
+        self.get_logger().info('Subscribed to: /oak/rgb/image_raw')
+        self.get_logger().info('Publishing to: /lane_cloud')
+        if self.debug_viz:
+            self.get_logger().info('Debug viz ON — publishing sensor_msgs/Image on /lane_debug (add Image display in RViz)')
+        else:
+            self.get_logger().info('Debug viz OFF — no /lane_debug topic (set debug_viz:=true in perception.launch.xml)')
+
+    def parameters_callback(self, params):
+        """Allow debug visualization to be toggled at runtime."""
+        for param in params:
+            if param.name == 'debug_viz':
+                self.debug_viz = bool(param.value)
+                state = 'ON' if self.debug_viz else 'OFF'
+                self.get_logger().info(f'Debug viz toggled {state} on /lane_debug')
+            elif param.name == 'min_lane_area':
+                self.min_lane_area = int(param.value)
+            elif param.name == 'max_distance':
+                self.max_distance = float(param.value)
+
+        return SetParametersResult(successful=True)
         
     def camera_info_callback(self, msg):
         """Store camera intrinsics"""

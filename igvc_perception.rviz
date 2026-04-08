@@ -197,7 +197,7 @@ Visualization Manager:
       Max Intensity: 4096
       Min Color: 0; 0; 0
       Min Intensity: 0
-      Name: Lane Cloud Front
+      Name: Lane Cloud
       Position Transformer: XYZ
       Selectable: true
       Size (m): 0.10000000149011612
@@ -209,7 +209,7 @@ Visualization Manager:
         Filter size: 10
         History Policy: Keep Last
         Reliability Policy: Best Effort
-        Value: /lane_cloud_front
+        Value: /lane_cloud
       Use Fixed Frame: true
       Use rainbow: true
       Value: true
@@ -225,7 +225,7 @@ Visualization Manager:
       Color: 85; 255; 0
       Color Transformer: FlatColor
       Decay Time: 0
-      Enabled: true
+      Enabled: false
       Invert Rainbow: false
       Max Color: 255; 255; 255
       Min Color: 0; 0; 0
@@ -257,7 +257,7 @@ Visualization Manager:
       Color: 0; 255; 255
       Color Transformer: FlatColor
       Decay Time: 0
-      Enabled: true
+      Enabled: false
       Invert Rainbow: false
       Max Color: 255; 255; 255
       Min Color: 0; 0; 0
@@ -289,7 +289,7 @@ Visualization Manager:
       Color: 255; 0; 127
       Color Transformer: FlatColor
       Decay Time: 0
-      Enabled: true
+      Enabled: false
       Invert Rainbow: false
       Max Color: 255; 255; 255
       Min Color: 0; 0; 0
@@ -362,57 +362,15 @@ Visualization Manager:
       Max Value: 1
       Median window: 5
       Min Value: 0
-      Name: Left Camera
+      Name: Lane Debug
       Normalize Range: true
       Topic:
         Depth: 5
         Durability Policy: Volatile
         History Policy: Keep Last
         Reliability Policy: Reliable
-        Value: /camera_left/image_raw
+        Value: /lane_debug
       Value: true
-    - Class: rviz_default_plugins/Image
-      Enabled: true
-      Max Value: 1
-      Median window: 5
-      Min Value: 0
-      Name: Right Camera
-      Normalize Range: true
-      Topic:
-        Depth: 5
-        Durability Policy: Volatile
-        History Policy: Keep Last
-        Reliability Policy: Reliable
-        Value: /camera_right/image_raw
-      Value: true
-    - Class: rviz_default_plugins/Image
-      Enabled: true
-      Max Value: 1
-      Median window: 5
-      Min Value: 0
-      Name: Rear Camera
-      Normalize Range: true
-      Topic:
-        Depth: 5
-        Durability Policy: Volatile
-        History Policy: Keep Last
-        Reliability Policy: Reliable
-        Value: /camera_rear/image_raw
-      Value: true
-    - Class: rviz_default_plugins/Image
-      Enabled: false
-      Max Value: 1
-      Median window: 5
-      Min Value: 0
-      Name: Front Lane Debug
-      Normalize Range: true
-      Topic:
-        Depth: 5
-        Durability Policy: Volatile
-        History Policy: Keep Last
-        Reliability Policy: Reliable
-        Value: /lane_debug_front
-      Value: false
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -481,14 +439,8 @@ Window Geometry:
     collapsed: false
   Front Camera (OAK-D):
     collapsed: false
-  Front Lane Debug:
+  Lane Debug:
     collapsed: true
-  Left Camera:
-    collapsed: false
-  Right Camera:
-    collapsed: false
-  Rear Camera:
-    collapsed: false
   Height: 1200
   Hide Left Dock: false
   Hide Right Dock: false

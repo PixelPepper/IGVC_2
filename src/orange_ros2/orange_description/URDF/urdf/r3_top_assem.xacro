@@ -2,7 +2,7 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="r3_robot">
   <!-- file:// + $(find ...) so Gazebo resolves visuals when spawning URDF (package:// is unreliable). -->
   <xacro:property name="mesh_dir" value="file://$(find orange_description)/URDF/meshes"/>
-  <!-- Wheel geometry for diff_drive (meters): center-to-center along y, tire diameter -->
+  <!-- Wheel geometry for diff_drive (meters); center-to-center along y, tire diameter -->
   <xacro:property name="wheel_sep" value="0.8105"/>
   <xacro:property name="wheel_diam" value="0.44"/>
 
@@ -10,7 +10,7 @@
   <joint name="base_joint" type="fixed">
     <parent link="base_footprint"/>
     <child link="base_link"/>
-    <!-- Ground ~ wheel bottom: wheel z -0.074, r=0.22 → raise base_link ~0.29 m above footprint -->
+    <!-- Ground ~ wheel bottom; wheel z -0.074, r=0.22; raise base_link ~0.29 m above footprint -->
     <origin xyz="0 0 0.24" rpy="0 0 0"/>
   </joint>
 
@@ -174,7 +174,8 @@
     <origin xyz="-0.12 0 0.12" rpy="0 0 0"/>
   </xacro:sensor_imu>
   <xacro:oak_d_pro name="oak" parent="base_link">
-    <origin xyz="0.35 0 0.45" rpy="0 0.52 0"/>
+    <!-- Mounted on the front-right pole, pitched down about 20 degrees -->
+    <origin xyz="-0.31 0.0 0.81" rpy="0 0.20 0"/>
   </xacro:oak_d_pro>
 
   <!-- Wheel / caster friction (matches orange_robot_simulation.gazebo pattern) -->

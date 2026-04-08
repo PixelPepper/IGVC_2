@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <launch>
   <arg name="use_sim_time" default="true"/>
-  <arg name="debug_viz" default="false"/>
+  <arg name="debug_viz" default="true"/>
   
   <!-- Lane Detection Node - Front Camera Only -->
   <node pkg="orange_perception" exec="lane_detector" name="lane_detector" output="screen">
     <param name="use_sim_time" value="$(var use_sim_time)"/>
-    <param name="debug_viz" value="true"/>
+    <param name="debug_viz" value="$(var debug_viz)"/>
     <param name="min_lane_area" value="50"/>
     <param name="max_distance" value="10.0"/>
   </node>
@@ -35,9 +35,5 @@
     <param name="range_max" value="10.0"/>
     <param name="use_inf" value="true"/>
   </node>
-  
-  <!-- TF for camera to base_link (static transform publisher) -->
-  <node pkg="tf2_ros" exec="static_transform_publisher" name="oak_to_base_link"
-        args="0.150 0.0 0.200 0 0 0 base_link oak_link"/>
   
 </launch>

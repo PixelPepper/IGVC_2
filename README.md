@@ -107,7 +107,7 @@ source setup_orange.sh
 ```bash
 cd IGVC_2   # or your workspace path
 source setup_orange.sh
-ros2 launch orange_gazebo orange_igvc_simple.launch.xml
+ros2 launch orange_gazebo orange_igvc_simple.launch.py
 ```
 
 **Terminal 2 – Navigation + Perception**
@@ -184,7 +184,7 @@ IGVC_2/
 - **Waypoints**: Edit `navigate_igvc_course.py` (`self.waypoints`)
 - **Nav2 params**: `orange_gazebo/config/nav2_params_fused.yaml` (costmaps, inflation, goal tolerance)
 - **Lane detection**: `orange_perception` (HSV thresholds, morphological ops)
-- **Robot spawn**: `orange_igvc_simple.launch.xml` (position, yaw)
+- **Robot spawn**: `orange_igvc_simple.launch.py` (kills stale Gazebo, then XML stack; or use `.launch.xml` alone — it waits ~2s after clearing port 11345)
 
 ---
 

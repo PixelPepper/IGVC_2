@@ -8,36 +8,49 @@
   <arg name="world_file_path" default="$(find-pkg-share orange_gazebo)/worlds/orange_igvc.world"/>
   <!-- R3 CAD robot + IGVC sensors/plugins; override for legacy: .../xacro/orange_robot_simulation.xacro -->
   <arg name="xacro_file_path" default="$(find-pkg-share orange_description)/URDF/urdf/r3_top_assem.xacro"/>
-  
-  <!-- robot_localization -->
-  <include file="$(find-pkg-share orange_sensor_tools)/launch/localization.launch.xml">
-    <arg name="use_sim_time" value="$(var use_sim_time)"/>
-    <arg name="odom_in" value="$(var odom_topic)"/>
-    <arg name="imu_in" value="$(var imu_topic)"/>
-    <arg name="fusion_odom_out" value="$(var fusion_odom_topic)"/>
-  </include>
-  
-  <!-- gzserver -->
-  <include file="$(find-pkg-share gazebo_ros)/launch/gzserver.launch.py">
-    <arg name="use_sim_time" value="$(var use_sim_time)"/>
-    <arg name="world" value="$(var world_file_path)"/>
-  </include>
-  
-  <!-- gzclient -->
-  <include file="$(find-pkg-share gazebo_ros)/launch/gzclient.launch.py">
-    <arg name="use_sim_time" value="$(var use_sim_time)"/>
-  </include>
-  
-  <!-- robot_state_publisher -->
-  <node pkg="robot_state_publisher" exec="robot_state_publisher">
-    <param name="use_sim_time" value="$(var use_sim_time)"/>
-    <param name="robot_description" value="$(command 'xacro $(var xacro_file_path)')"/>
-  </node>
-  
-  <!-- spawn_entity -->
-  <!-- Spawn at origin facing WEST (180deg = 3.14159rad = -X direction) -->
-  <!-- This is 180 degrees from default (EAST), facing toward the course -->
-  <node pkg="gazebo_ros" exec="spawn_entity.py" args="-entity orange_robot -topic /robot_description -x 0.0 -y 0.0 -z 0.1 -Y 3.14159">
-    <param name="use_sim_time" value="$(var use_sim_time)"/>
-  </node>
+  <!-- If true, stop stray gzserver/gzclient (frees TCP 11345). orange_igvc_simple.launch.py sets this false and kills first. -->
+  <arg name="kill_stale_gazebo" default="true"/>
+  <!-- Seconds to wait after optional kill before starting Gazebo stack; avoids racing the old server. .launch.py uses 0. -->
+  <arg name="gazebo_stack_delay" default="2.0"/>
+
+  <!-- Standalone XML: kill leftovers, then start sim after delay. -->
+  <executable
+    cmd="bash -c 'killall -q gzserver gzclient 2>/dev/null || true; sleep 0.5; killall -9 -q gzserver gzclient 2>/dev/null || true; sleep 1'"
+    output="screen"
+    name="kill_stale_gazebo"
+    if="$(var kill_stale_gazebo)"/>
+
+  <timer period="$(var gazebo_stack_delay)">
+    <!-- robot_localization -->
+    <include file="$(find-pkg-share orange_sensor_tools)/launch/localization.launch.xml">
+      <arg name="use_sim_time" value="$(var use_sim_time)"/>
+      <arg name="odom_in" value="$(var odom_topic)"/>
+      <arg name="imu_in" value="$(var imu_topic)"/>
+      <arg name="fusion_odom_out" value="$(var fusion_odom_topic)"/>
+    </include>
+
+    <!-- gzserver -->
+    <include file="$(find-pkg-share gazebo_ros)/launch/gzserver.launch.py">
+      <arg name="use_sim_time" value="$(var use_sim_time)"/>
+      <arg name="world" value="$(var world_file_path)"/>
+    </include>
+
+    <!-- gzclient -->
+    <include file="$(find-pkg-share gazebo_ros)/launch/gzclient.launch.py">
+      <arg name="use_sim_time" value="$(var use_sim_time)"/>
+    </include>
+
+    <!-- robot_state_publisher -->
+    <node pkg="robot_state_publisher" exec="robot_state_publisher">
+      <param name="use_sim_time" value="$(var use_sim_time)"/>
+      <!-- type=str required: URDF/XML contains text YAML would parse as mappings (e.g. in comments). -->
+      <param name="robot_description" value="$(command 'xacro $(var xacro_file_path)')" type="str"/>
+    </node>
+
+    <!-- spawn_entity -->
+    <!-- Spawn at origin facing WEST (180deg = 3.14159rad = -X direction) -->
+    <node pkg="gazebo_ros" exec="spawn_entity.py" args="-entity orange_robot -topic /robot_description -x 0.0 -y 0.0 -z 0.1 -Y 3.14159">
+      <param name="use_sim_time" value="$(var use_sim_time)"/>
+    </node>
+  </timer>
 </launch>

@@ -85,11 +85,11 @@
   <!-- robot_state_publisher -->
   <node pkg="robot_state_publisher" exec="robot_state_publisher">
     <param name="use_sim_time" value="$(var use_sim_time)"/>
-    <param name="robot_description" value="$(command 'xacro $(var xacro_file_path)')"/>
+    <param name="robot_description" value="$(command 'xacro $(var xacro_file_path)')" type="str"/>
   </node>
   <!-- joint_state_publisher -->
   <node pkg="joint_state_publisher" exec="joint_state_publisher">
     <param name="use_sim_time" value="$(var use_sim_time)"/>
-    <param name="robot_description" value="$(command 'xacro $(var xacro_file_path)')"/>
+    <param name="robot_description" value="$(command 'xacro $(var xacro_file_path)')" type="str"/>
   </node>
 </launch>

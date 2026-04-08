@@ -27,6 +27,11 @@ def generate_launch_description():
         AnyLaunchDescriptionSource(
             os.path.join(pkg_share, 'launch', 'orange_igvc_simple.launch.xml'),
         ),
+        launch_arguments=[
+            # XML also supports standalone kill+delay; avoid double-kill and extra wait when using this entry point.
+            ('kill_stale_gazebo', 'false'),
+            ('gazebo_stack_delay', '0'),
+        ],
     )
     return LaunchDescription(
         [
