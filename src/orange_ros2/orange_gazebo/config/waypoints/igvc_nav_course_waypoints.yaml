@@ -1,0 +1,17 @@
+# Waypoints for navigate_igvc_course.py / RViz course visualization (odom frame).
+# Keep this list in sync with navigate_igvc_course.py when you change the lap.
+waypoints:
+  - {name: "Mid to WP6", x: 9.5, y: 0.7, z: 0.0, yaw: 0.0}
+  - {name: "Waypoint 6", x: 18.902129, y: 0.687874, z: 0.0, yaw: 0.0}
+  - {name: "Mid WP6-WP5", x: 18.8, y: -14.5, z: 0.0, yaw: 0.0}
+  - {name: "Waypoint 5", x: 18.668346, y: -29.292145, z: 0.0, yaw: 0.0}
+  - {name: "Mid WP5-WP4", x: 12.5, y: -30.0, z: 0.0, yaw: 0.0}
+  - {name: "Waypoint 4", x: 6.476277, y: -30.752035, z: 0.0, yaw: 0.0}
+  - {name: "Mid WP4-WP3", x: 0.0, y: -30.5, z: 0.0, yaw: 0.0}
+  - {name: "Waypoint 3", x: -6.026554, y: -30.380053, z: 0.0, yaw: 0.0}
+  - {name: "Mid WP3-WP2", x: -12.0, y: -30.4, z: 0.0, yaw: 0.0}
+  - {name: "Waypoint 2", x: -17.978396, y: -30.465322, z: 0.0, yaw: 0.0}
+  - {name: "Mid WP2-WP1", x: -19.0, y: -15.0, z: 0.0, yaw: 0.0}
+  - {name: "Waypoint 1", x: -19.106506, y: -0.705461, z: 0.0, yaw: 0.0}
+  - {name: "Mid to Return", x: -9.5, y: 0.0, z: 0.0, yaw: 0.0}
+  - {name: "Return to Start", x: 0.0, y: 0.0, z: 0.0, yaw: 0.0}

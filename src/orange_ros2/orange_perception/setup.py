@@ -29,6 +29,7 @@ setup(
         'console_scripts': [
             'lane_detector = orange_perception.lane_detector:main',
             'pointcloud_fusion = orange_perception.pointcloud_fusion:main',
+            'waypoint_path_viz = orange_perception.waypoint_path_viz:main',
         ],
     },
 )

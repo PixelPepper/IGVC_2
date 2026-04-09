@@ -2,6 +2,7 @@
 <launch>
   <arg name="use_sim_time" default="true"/>
   <arg name="debug_viz" default="true"/>
+  <arg name="waypoints_viz_file" default="$(find-pkg-share orange_gazebo)/config/waypoints/igvc_nav_course_waypoints.yaml"/>
   
   <!-- Lane Detection Node - Front Camera Only -->
   <node pkg="orange_perception" exec="lane_detector" name="lane_detector" output="screen">
@@ -9,6 +10,9 @@
     <param name="debug_viz" value="$(var debug_viz)"/>
     <param name="min_lane_area" value="50"/>
     <param name="max_distance" value="10.0"/>
+    <!-- Ray–ground intersection in base_link: match base_joint z (footprint → base_link) in r3_top_assem.xacro -->
+    <param name="ground_z_in_base_link" value="-0.24"/>
+    <param name="output_frame" value="base_link"/>
   </node>
   
   <!-- Point Cloud Fusion Node -->
@@ -35,5 +39,13 @@
     <param name="range_max" value="10.0"/>
     <param name="use_inf" value="true"/>
   </node>
-  
+
+  <!-- IGVC course waypoints as nav_msgs/Path for RViz (odom frame; matches navigate_igvc_course.py when YAML is in sync) -->
+  <node pkg="orange_perception" exec="waypoint_path_viz" name="waypoint_path_viz" output="screen">
+    <param name="use_sim_time" value="$(var use_sim_time)"/>
+    <param name="waypoints_file" value="$(var waypoints_viz_file)"/>
+    <param name="frame_id" value="odom"/>
+    <param name="topic" value="igvc_course/waypoints"/>
+  </node>
+
 </launch>

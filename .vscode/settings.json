@@ -1,0 +1,14 @@
+{
+  "ROS2.distro": "humble",
+  "urdf-editor.PackageSearchPaths": [
+    "${workspaceFolder}/src/orange_ros2"
+  ],
+  "urdf-editor.CameraDistanceToRobot": 4.0,
+  "ros.distro": "humble",
+  "python.autoComplete.extraPaths": [
+    "/home/rcruz/IGVC_2/build/orange_perception",
+    "/home/rcruz/IGVC_2/install/orange_perception/lib/python3.10/site-packages",
+    "/opt/ros/humble/lib/python3.10/site-packages",
+    "/opt/ros/humble/local/lib/python3.10/dist-packages"
+  ]
+}
