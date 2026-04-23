@@ -4,7 +4,7 @@
   <arg name="params_file" default="$(find-pkg-share orange_gazebo)/config/nav2_params_fused.yaml"/>
   <arg name="autostart" default="true"/>
   <arg name="lane_debug_viz" default="true"/>
-  <arg name="waypoints_viz_file" default="$(find-pkg-share orange_gazebo)/config/waypoints/igvc_nav_course_waypoints.yaml"/>
+  <arg name="waypoints_viz_file" default="$(find-pkg-share orange_gazebo)/config/waypoints/igvc_course_waypoints.yaml"/>
 
   <!-- Perception Stack (Lane Detection + Point Cloud Fusion) -->
   <include file="$(find-pkg-share orange_perception)/launch/perception.launch.xml">

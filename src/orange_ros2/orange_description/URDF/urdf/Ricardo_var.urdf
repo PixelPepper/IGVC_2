@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="Ricardo_var">
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="0.159828508111213 -0.0620434630357985 -0.00127316885726741"
+        rpy="0 0 0" />
+      <mass
+        value="81.2128076953775" />
+      <inertia
+        ixx="0.728649987183168"
+        ixy="0.0224863967981024"
+        ixz="1.32350754470578E-05"
+        iyy="1.53135241814219"
+        iyz="7.48148338660151E-05"
+        izz="1.14291279759415" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 3.1416" />
+      <geometry>
+        <mesh
+          filename="package://Ricardo_var/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 3.1416" />
+      <geometry>
+        <mesh
+          filename="package://Ricardo_var/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="left_wheel">
+    <inertial>
+      <origin
+        xyz="1.798E-05 0.80693 -1.798E-05"
+        rpy="0 0 0" />
+      <mass
+        value="6.0074" />
+      <inertia
+        ixx="0.11314"
+        ixy="-3.6258E-08"
+        ixz="8.1856E-07"
+        iyy="0.20566"
+        iyz="3.6267E-08"
+        izz="0.11314" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Ricardo_var/meshes/left_wheel.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Ricardo_var/meshes/left_wheel.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Wheel Left"
+    type="revolute">
+    <origin
+      xyz="0.37822 -0.40525 -0.05945"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="left_wheel" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-5000"
+      upper="5000"
+      effort="100"
+      velocity="100" />
+  </joint>
+  <link
+    name="right_wheel">
+    <inertial>
+      <origin
+        xyz="-1.798E-05 -0.80693 -1.798E-05"
+        rpy="0 0 0" />
+      <mass
+        value="6.0074" />
+      <inertia
+        ixx="0.11314"
+        ixy="-3.6258E-08"
+        ixz="-8.1856E-07"
+        iyy="0.20566"
+        iyz="-3.6267E-08"
+        izz="0.11314" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Ricardo_var/meshes/right_wheel.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Ricardo_var/meshes/right_wheel.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Wheel Right"
+    type="revolute">
+    <origin
+      xyz="0.37822 0.40526 -0.05945"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="right_wheel" />
+    <axis
+      xyz="0 -1 0" />
+    <limit
+      lower="-5000"
+      upper="5000"
+      effort="100"
+      velocity="100" />
+  </joint>
+  <link
+    name="left_caster">
+    <inertial>
+      <origin
+        xyz="-0.039652 0.49219 -0.13418"
+        rpy="0 0 0" />
+      <mass
+        value="1.8501" />
+      <inertia
+        ixx="0.0057433"
+        ixy="2.8684E-08"
+        ixz="-0.00012827"
+        iyy="0.0096143"
+        iyz="8.6762E-08"
+        izz="0.0054708" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Ricardo_var/meshes/left_caster.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Ricardo_var/meshes/left_caster.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Caster Left"
+    type="revolute">
+    <origin
+      xyz="-0.40543 -0.24612 -0.02135"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="left_caster" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="right_caster">
+    <inertial>
+      <origin
+        xyz="0.039652 -0.49219 -0.13418"
+        rpy="0 0 0" />
+      <mass
+        value="1.8501" />
+      <inertia
+        ixx="0.0057433"
+        ixy="2.8684E-08"
+        ixz="0.00012827"
+        iyy="0.0096143"
+        iyz="-8.6762E-08"
+        izz="0.0054708" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Ricardo_var/meshes/right_caster.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://Ricardo_var/meshes/right_caster.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Castor Right"
+    type="revolute">
+    <origin
+      xyz="-0.40543 0.24612 -0.02135"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="right_caster" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+</robot>

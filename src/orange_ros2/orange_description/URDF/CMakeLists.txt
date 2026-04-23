@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.8.3)
 
-project(R3-a (Top_Assem))
+project(Ricardo_var)
 
 find_package(catkin REQUIRED)
 

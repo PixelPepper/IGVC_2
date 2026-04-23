@@ -1,0 +1,175 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="ricardo_var">
+  <!--Gazebo: friction + diff drive + joint_state_publisher-->
+  <xacro:include filename="$(find orange_description)/xacro/ricardo_var_simulation.gazebo"/>
+
+  <!--2D LiDAR (Ricardo_var: first-pass mount; tune in RViz/Gazebo)-->
+  <xacro:include filename="$(find orange_description)/xacro/sensors/hokuyo.xacro"/>
+  <xacro:sensor_hokuyo name="hokuyo" parent="base_link" min_angle="-1.22" max_angle="1.22" samples="720">
+    <origin xyz="0.375 0.0 0.325" rpy="0.0 0.0 ${pi}"/>
+  </xacro:sensor_hokuyo>
+
+  <!--IMU-->
+  <xacro:include filename="$(find orange_description)/xacro/sensors/imu.xacro"/>
+  <xacro:sensor_imu name="imu" parent="base_link" size="0.05 0.05 0.05">
+    <origin xyz="0.16 -0.06 0.0" rpy="0.0 0.0 ${pi}"/>
+  </xacro:sensor_imu>
+
+  <!--OAK-D Pro (first-pass mount)-->
+  <xacro:include filename="$(find orange_description)/xacro/sensors/oak_d_pro.xacro"/>
+  <xacro:oak_d_pro name="oak" parent="base_link">
+    <origin xyz="-0.175 0.0 0.825" rpy="0.0 0.2125 0.0"/>
+  </xacro:oak_d_pro>
+
+  <!--base_footprint: z offset like orange_robot; no yaw. Model rotated 180 deg about Z: base_link +X is former -X (visual front along -X). Consider Nav2 / base_footprint when tuning.-->
+  <link name="base_footprint"/>
+  <joint name="base_joint" type="fixed">
+    <parent link="base_footprint"/>
+    <child link="base_link"/>
+    <origin xyz="0.0 0.0 0.1015" rpy="0 0 0"/>
+  </joint>
+
+  <!--SolidWorks export: links/joints with valid names, continuous wheels, fixed casters, mesh paths in orange_description-->
+  <link name="base_link">
+    <inertial>
+      <origin xyz="0.159828508111213 -0.0620434630357985 -0.00127316885726741" rpy="0 0 0"/>
+      <mass value="81.2128076953775"/>
+      <inertia
+        ixx="0.728649987183168" ixy="0.0224863967981024" ixz="1.32350754470578E-05"
+        iyy="1.53135241814219" iyz="7.48148338660151E-05" izz="1.14291279759415"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 ${pi}"/>
+      <geometry>
+        <mesh filename="file://$(find orange_description)/URDF/meshes/base_link.STL"/>
+      </geometry>
+      <material name="">
+        <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 ${pi}"/>
+      <geometry>
+        <mesh filename="file://$(find orange_description)/URDF/meshes/base_link.STL"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="left_wheel">
+    <inertial>
+      <origin xyz="1.798E-05 0.80693 -1.798E-05" rpy="0 0 0"/>
+      <mass value="6.0074"/>
+      <inertia
+        ixx="0.11314" ixy="-3.6258E-08" ixz="8.1856E-07" iyy="0.20566" iyz="3.6267E-08" izz="0.11314"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find orange_description)/URDF/meshes/left_wheel.STL"/>
+      </geometry>
+      <material name="">
+        <color rgba="0.79216 0.81961 0.93333 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find orange_description)/URDF/meshes/left_wheel.STL"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="left_wheel_hinge" type="continuous">
+    <origin xyz="0.37822 -0.40525 -0.05945" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="left_wheel"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+
+  <link name="right_wheel">
+    <inertial>
+      <origin xyz="-1.798E-05 -0.80693 -1.798E-05" rpy="0 0 0"/>
+      <mass value="6.0074"/>
+      <inertia
+        ixx="0.11314" ixy="-3.6258E-08" ixz="-8.1856E-07" iyy="0.20566" iyz="-3.6267E-08" izz="0.11314"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find orange_description)/URDF/meshes/right_wheel.STL"/>
+      </geometry>
+      <material name="">
+        <color rgba="0.79216 0.81961 0.93333 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find orange_description)/URDF/meshes/right_wheel.STL"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="right_wheel_hinge" type="continuous">
+    <origin xyz="0.37822 0.40526 -0.05945" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="right_wheel"/>
+    <axis xyz="0 -1 0"/>
+  </joint>
+
+  <link name="left_caster">
+    <inertial>
+      <origin xyz="-0.039652 0.49219 -0.13418" rpy="0 0 0"/>
+      <mass value="1.8501"/>
+      <inertia
+        ixx="0.0057433" ixy="2.8684E-08" ixz="-0.00012827" iyy="0.0096143" iyz="8.6762E-08" izz="0.0054708"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find orange_description)/URDF/meshes/left_caster.STL"/>
+      </geometry>
+      <material name="">
+        <color rgba="0.75294 0.75294 0.75294 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find orange_description)/URDF/meshes/left_caster.STL"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="left_caster_hinge" type="fixed">
+    <origin xyz="-0.40543 -0.24612 -0.02135" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="left_caster"/>
+  </joint>
+
+  <link name="right_caster">
+    <inertial>
+      <origin xyz="0.039652 -0.49219 -0.13418" rpy="0 0 0"/>
+      <mass value="1.8501"/>
+      <inertia
+        ixx="0.0057433" ixy="2.8684E-08" ixz="0.00012827" iyy="0.0096143" iyz="-8.6762E-08" izz="0.0054708"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find orange_description)/URDF/meshes/right_caster.STL"/>
+      </geometry>
+      <material name="">
+        <color rgba="0.75294 0.75294 0.75294 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find orange_description)/URDF/meshes/right_caster.STL"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="right_caster_hinge" type="fixed">
+    <origin xyz="-0.40543 0.24612 -0.02135" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="right_caster"/>
+  </joint>
+</robot>

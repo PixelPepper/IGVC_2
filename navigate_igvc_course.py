@@ -1,15 +1,82 @@
 #!/usr/bin/env python3
 """
-Navigate through the IGVC course autonomously
-Sends waypoints sequentially through the course
+Navigate through the IGVC course autonomously.
+
+The authoritative course definition lives in
+src/orange_ros2/orange_gazebo/config/waypoints/igvc_course_waypoints.yaml.
+This script loads that file and inserts intermediate midpoints between each
+named waypoint for smoother path following.
 """
 
-import rclpy
-from rclpy.node import Node
-from rclpy.action import ActionClient
-from nav2_msgs.action import NavigateToPose
-from geometry_msgs.msg import PoseStamped
+from pathlib import Path
 import time
+
+import rclpy
+from rclpy.action import ActionClient
+from rclpy.node import Node
+from nav2_msgs.action import NavigateToPose
+import yaml
+
+
+WAYPOINTS_FILE = (
+    Path(__file__).resolve().parent
+    / "src/orange_ros2/orange_gazebo/config/waypoints/igvc_course_waypoints.yaml"
+)
+
+
+def load_named_waypoints(path: Path) -> list[dict]:
+    """Load the named odom-frame route from the source-of-truth YAML."""
+    with path.open(encoding="utf-8") as f:
+        data = yaml.safe_load(f) or {}
+
+    entries = data.get("waypoints")
+    if not isinstance(entries, list) or not entries:
+        raise ValueError(f'No "waypoints" list found in {path}')
+
+    named_waypoints = []
+    for i, wp in enumerate(entries, start=1):
+        if not isinstance(wp, dict):
+            continue
+        point = wp.get("point", {}) if isinstance(wp.get("point"), dict) else {}
+        named_waypoints.append(
+            {
+                "name": str(wp.get("name", f"Waypoint {i}")),
+                "x": float(wp.get("x", point.get("x", 0.0))),
+                "y": float(wp.get("y", point.get("y", 0.0))),
+                "yaw": float(wp.get("yaw", 0.0)),
+            }
+        )
+
+    if not named_waypoints:
+        raise ValueError(f"No usable waypoint entries found in {path}")
+    return named_waypoints
+
+
+def build_course_sequence(named_waypoints: list[dict]) -> list[dict]:
+    """Interleave midpoint goals so long legs are split into smaller hops."""
+    route = []
+    previous = {"name": "Start", "x": 0.0, "y": 0.0, "yaw": 0.0}
+
+    for wp in named_waypoints:
+        if previous["name"] == "Start":
+            mid_name = f"Mid to {wp['name']}"
+        elif wp["name"] == "Return to Start":
+            mid_name = "Mid to Return"
+        else:
+            mid_name = f"Mid {previous['name']}-{wp['name']}"
+
+        route.append(
+            {
+                "name": mid_name,
+                "x": (previous["x"] + wp["x"]) / 2.0,
+                "y": (previous["y"] + wp["y"]) / 2.0,
+                "yaw": wp["yaw"],
+            }
+        )
+        route.append(wp)
+        previous = wp
+
+    return route
 
 class IGVCCourseNavigator(Node):
     def __init__(self):
@@ -19,37 +86,12 @@ class IGVCCourseNavigator(Node):
         self.get_logger().info('Waiting for Nav2 action server...')
         self._action_client.wait_for_server()
         self.get_logger().info('Nav2 action server ready!')
-        
-        # IGVC course waypoints with INTERMEDIATE points for better path following
-        self.waypoints = [
-            # Start → WP6 (straight east)
-            {'x': 9.5, 'y': 0.7, 'yaw': 0.0, 'name': 'Mid to WP6'},
-            {'x': 18.902129, 'y': 0.687874, 'yaw': 0.0, 'name': 'Waypoint 6'},
-            
-            # WP6 → WP5 (turn south)
-            {'x': 18.8, 'y': -14.5, 'yaw': 0.0, 'name': 'Mid WP6-WP5'},
-            {'x': 18.668346, 'y': -29.292145, 'yaw': 0.0, 'name': 'Waypoint 5'},
-            
-            # WP5 → WP4 (turn west along bottom)
-            {'x': 12.5, 'y': -30.0, 'yaw': 0.0, 'name': 'Mid WP5-WP4'},
-            {'x': 6.476277, 'y': -30.752035, 'yaw': 0.0, 'name': 'Waypoint 4'},
-            
-            # WP4 → WP3 (continue west)
-            {'x': 0.0, 'y': -30.5, 'yaw': 0.0, 'name': 'Mid WP4-WP3'},
-            {'x': -6.026554, 'y': -30.380053, 'yaw': 0.0, 'name': 'Waypoint 3'},
-            
-            # WP3 → WP2 (continue west)
-            {'x': -12.0, 'y': -30.4, 'yaw': 0.0, 'name': 'Mid WP3-WP2'},
-            {'x': -17.978396, 'y': -30.465322, 'yaw': 0.0, 'name': 'Waypoint 2'},
-            
-            # WP2 → WP1 (turn north)
-            {'x': -19.0, 'y': -15.0, 'yaw': 0.0, 'name': 'Mid WP2-WP1'},
-            {'x': -19.106506, 'y': -0.705461, 'yaw': 0.0, 'name': 'Waypoint 1'},
-            
-            # WP1 → Return (back to start)
-            {'x': -9.5, 'y': 0.0, 'yaw': 0.0, 'name': 'Mid to Return'},
-            {'x': 0.0, 'y': 0.0, 'yaw': 0.0, 'name': 'Return to Start'},
-        ]
+        self.waypoints_file = WAYPOINTS_FILE
+        self.named_waypoints = load_named_waypoints(self.waypoints_file)
+        self.waypoints = build_course_sequence(self.named_waypoints)
+        self.get_logger().info(
+            f'Loaded {len(self.named_waypoints)} named waypoints from {self.waypoints_file}'
+        )
         
         self.current_waypoint = 0
         self.goal_handle = None

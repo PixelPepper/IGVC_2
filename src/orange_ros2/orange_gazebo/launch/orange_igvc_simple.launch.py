@@ -5,9 +5,10 @@ import os
 
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch.actions import ExecuteProcess, IncludeLaunchDescription, RegisterEventHandler
+from launch.actions import DeclareLaunchArgument, ExecuteProcess, IncludeLaunchDescription, RegisterEventHandler
 from launch.event_handlers import OnProcessExit
 from launch.launch_description_sources import AnyLaunchDescriptionSource
+from launch.substitutions import LaunchConfiguration
 
 
 def generate_launch_description():
@@ -31,10 +32,16 @@ def generate_launch_description():
             # XML also supports standalone kill+delay; avoid double-kill and extra wait when using this entry point.
             ('kill_stale_gazebo', 'false'),
             ('gazebo_stack_delay', '0'),
+            ('spawn_yaw', LaunchConfiguration('spawn_yaw')),
         ],
     )
     return LaunchDescription(
         [
+            DeclareLaunchArgument(
+                'spawn_yaw',
+                default_value='0.0',
+                description='Initial robot yaw in rad for spawn_entity.py -Y (default 0; use ~3.14 to face -X in world).',
+            ),
             kill_stale,
             RegisterEventHandler(
                 OnProcessExit(

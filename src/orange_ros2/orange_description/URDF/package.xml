@@ -1,10 +1,10 @@
 <package format="2">
-  <name>R3-a (Top_Assem)</name>
+  <name>Ricardo_var</name>
   <version>1.0.0</version>
   <description>
-    <p>URDF Description package for R3-a (Top_Assem)</p>
+    <p>URDF Description package for Ricardo_var</p>
     <p>This package contains configuration data, 3D models and launch files
-for R3-a (Top_Assem) robot</p>
+for Ricardo_var robot</p>
   </description>
   <author>TODO</author>
   <maintainer email="TODO@email.com" />

@@ -23,7 +23,8 @@ def yaw_to_quat(yaw: float) -> Quaternion:
 class WaypointPathViz(Node):
     def __init__(self):
         super().__init__('waypoint_path_viz')
-        self.declare_parameter('use_sim_time', False)
+        # use_sim_time comes from launch (perception.launch.xml); do not declare here
+        # or ParameterAlreadyDeclaredException breaks the node.
         self.declare_parameter('waypoints_file', '')
         self.declare_parameter('frame_id', 'odom')
         self.declare_parameter('topic', 'igvc_course/waypoints')

@@ -23,10 +23,12 @@
 
 ## Your IGVC Course Waypoints
 The robot will navigate through these waypoints in order:
-1. **Waypoint 1**: x=-15.90, y=30.53
-2. **Waypoint 2**: x=-6.69, y=30.59
-3. **Waypoint 3**: x=4.74, y=30.75
-4. **Waypoint 4**: x=14.03, y=30.43
+1. **Waypoint 1**: x=-18.8, y=0.8
+2. **Waypoint 2**: x=-18.8, y=28.9
+3. **Waypoint 3**: x=-3.2, y=29.3
+4. **Waypoint 4**: x=5.3, y=30.5
+5. **Waypoint 5**: x=18.5, y=29.7
+6. **Waypoint 6**: x=17.7, y=0.0
 5. **Return Home**: x=0.00, y=0.00
 
 ---

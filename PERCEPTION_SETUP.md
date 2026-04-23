@@ -180,7 +180,7 @@ ros2 topic hz /fused_cloud
 Edit in Terminal 2 while running:
 ```bash
 # Increase minimum lane area (fewer false positives)
-ros2 param set /lane_detector min_lane_area 200
+ros2 param set /lane_detector min_lane_area 150
 
 # Increase max detection distance
 ros2 param set /lane_detector max_distance 15.0

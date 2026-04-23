@@ -1,0 +1,116 @@
+# IGVC course waypoints (odom frame). Installed with orange_gazebo.
+#
+# Dual format for:
+# - waypoint_path_viz: flat x, y, z, yaw per entry
+# - waypoint_nav: waypoints[].point + finish_pose (see waypoint_navigation)
+#
+# Source of truth for the IGVC course route.
+# Used by:
+# - waypoint_nav (YAML waypoint follower)
+# - waypoint_path_viz (RViz course path)
+# - navigate_igvc_course.py (loads this file directly and derives midpoints)
+
+waypoints:
+  - name: "Middle Start to Waypoint 1"
+    x: 9.0
+    y: 0.0
+    z: 0.0
+    yaw: 0.0
+    point: {x: 9.0, y: 0.0, z: 0.0, vel: 0.8, rad: 0.5, stop: false}
+
+  - name: "Waypoint 1"
+    x: 17.7
+    y: 0.0
+    z: 0.0
+    yaw: 0.0
+    point: {x: 17.7, y: 0.0, z: 0.0, vel: 0.8, rad: 0.5, stop: false}
+
+  - name: "Middle Waypoint 1 to Waypoint 2"
+    x: 18.0
+    y: -15.0
+    z: 0.0
+    yaw: 0.0
+    point: {x: 18.0, y: -15.0, z: 0.0, vel: 0.8, rad: 0.5, stop: false}
+
+  - name: "Waypoint 2"
+    x: 18.5
+    y: -29.7
+    z: 0.0
+    yaw: 0.0
+    point: {x: 18.5, y: -29.7, z: 0.0, vel: 0.8, rad: 0.5, stop: false}
+
+  - name: "Middle Waypoint 2 to Waypoint 3"
+    x: 9.0
+    y: -30.0
+    z: 0.0
+    yaw: 0.0
+    point: {x: 9.0, y: -30.0, z: 0.0, vel: 0.8, rad: 0.5, stop: false}
+
+  - name: "Waypoint 3"
+    x: 5.3
+    y: -30.47
+    z: 0.0
+    yaw: 0.0
+    point: {x: 5.3, y: -30.47, z: 0.0, vel: 0.8, rad: 0.5, stop: false}
+
+  - name: "Middle Waypoint 3 to Waypoint 4"
+    x: 0.0
+    y: -30.0
+    z: 0.0
+    yaw: 0.0
+    point: {x: 0.0, y: -30.0, z: 0.0, vel: 0.8, rad: 0.5, stop: false}
+
+  - name: "Waypoint 4"
+    x: -3.2
+    y: -29.3
+    z: 0.0
+    yaw: 0.0
+    point: {x: -3.2, y: -29.3, z: 0.0, vel: 0.8, rad: 0.5, stop: false}
+
+  - name: "Middle Waypoint 4 to Waypoint 5"
+    x: -9.0
+    y: -30.0
+    z: 0.0
+    yaw: 0.0
+    point: {x: -9.0, y: -30.0, z: 0.0, vel: 0.8, rad: 0.5, stop: false}
+
+  - name: "Waypoint 5"
+    x: -18.9
+    y: -28.9
+    z: 0.0
+    yaw: 0.0
+    point: {x: -18.9, y: -28.9, z: 0.0, vel: 0.8, rad: 0.5, stop: false}
+
+  - name: "Middle Waypoint 5 to Waypoint 6"
+    x: -18.0
+    y: -15.0
+    z: 0.0
+    yaw: 0.0
+    point: {x: -18.0, y: -15.0, z: 0.0, vel: 0.8, rad: 0.5, stop: false}
+
+  - name: "Waypoint 6"
+    x: -18.8
+    y: -0.8
+    z: 0.0
+    yaw: 0.0
+    point: {x: -18.8, y: -0.8, z: 0.0, vel: 0.8, rad: 0.5, stop: false}
+
+  - name: "Middle Waypoint 6 to Return"
+    x: -9.0
+    y: 0.0
+    z: 0.0
+    yaw: 0.0
+    point: {x: -9.0, y: 0.0, z: 0.0, vel: 0.5, rad: 0.5, stop: false}
+
+  - name: "Return to Start"
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    yaw: 0.0
+    point: {x: 0.0, y: 0.0, z: 0.0, vel: 0.5, rad: 0.5, stop: true}
+
+finish_pose:
+  header: {seq: 0, stamp: 0.0, frame_id: odom}
+  pose:
+    position: {x: 0.0, y: 0.0, z: 0.0}
+    orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}

@@ -24,14 +24,14 @@ cd ~/IGVC_2   # or your clone directory
 source setup_orange.sh
 ros2 launch waypoint_navigation waypoint_nav.launch.xml \
   use_sim_time:=true \
-  waypoints_file:=$(ros2 pkg prefix orange_gazebo)/share/orange_gazebo/config/waypoints/igvc_waypoints.yaml \
+  waypoints_file:=$(ros2 pkg prefix orange_gazebo)/share/orange_gazebo/config/waypoints/igvc_course_waypoints.yaml \
   world_frame:=odom \
   tandem_scan:=/hokuyo_scan
 ```
 
 **What this does:**
 - Opens xterm window showing navigation status
-- Loads waypoints from `igvc_waypoints.yaml`
+- Loads waypoints from `igvc_course_waypoints.yaml`
 - Starts autonomous waypoint following
 - Enables obstacle detection and avoidance
 
@@ -117,22 +117,15 @@ ros2 node list
 
 Edit the waypoints file **in your clone** (then rebuild/install so the install space picks it up), for example:
 
-`src/orange_ros2/orange_gazebo/config/waypoints/igvc_waypoints.yaml`
+`src/orange_ros2/orange_gazebo/config/waypoints/igvc_course_waypoints.yaml`
 
 Or edit the installed copy (path works from any cwd):
 
-`$(ros2 pkg prefix orange_gazebo)/share/orange_gazebo/config/waypoints/igvc_waypoints.yaml`
+`$(ros2 pkg prefix orange_gazebo)/share/orange_gazebo/config/waypoints/igvc_course_waypoints.yaml`
 
-Example content:
+The file uses a **dual format**: flat `x, y, z, yaw` for RViz course visualization, plus nested `point: {x, y, z, vel, rad, stop}` and top-level `finish_pose` for `waypoint_nav`. See the installed file for a full example.
 
-```yaml
-waypoints:
-- point: {x: 2.0, y: 0.0, z: 0.0, vel: 0.8, rad: 0.5, stop: false}
-- point: {x: 4.0, y: 0.5, z: 0.0, vel: 0.8, rad: 0.5, stop: false}
-# Add more waypoints...
-```
-
-**Parameters:**
+**Parameters (`point` block):**
 - `x, y`: Position in meters (odom frame)
 - `vel`: Max velocity (m/s) - lower for tight sections
 - `rad`: Acceptance radius - how close to waypoint before moving to next
@@ -233,7 +226,7 @@ ros2 launch orange_navigation waypoint_navigation.launch.xml \
 
 ## Files Reference
 
-- **Waypoints:** `install/orange_gazebo/share/orange_gazebo/config/waypoints/igvc_waypoints.yaml`
+- **Waypoints:** `install/orange_gazebo/share/orange_gazebo/config/waypoints/igvc_course_waypoints.yaml`
 - **Setup Script:** `setup_orange.sh` (in workspace root)
 - **Launch Files:** `install/orange_gazebo/share/orange_gazebo/launch/`
 - **README:** `README.md`
@@ -255,7 +248,7 @@ ros2 launch orange_gazebo orange_igvc_simple.launch.py
 # Launch navigation
 ros2 launch waypoint_navigation waypoint_nav.launch.xml \
   use_sim_time:=true \
-  waypoints_file:=$(ros2 pkg prefix orange_gazebo)/share/orange_gazebo/config/waypoints/igvc_waypoints.yaml \
+  waypoints_file:=$(ros2 pkg prefix orange_gazebo)/share/orange_gazebo/config/waypoints/igvc_course_waypoints.yaml \
   world_frame:=odom \
   tandem_scan:=/hokuyo_scan
 

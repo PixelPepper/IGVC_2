@@ -117,6 +117,15 @@ Or use the helper script:
 ./launch_rviz_perception.sh
 ```
 
+**RViz note:** `igvc_perception.rviz` has **Local Costmap** disabled by default to avoid GPU/driver issues with costmap rendering (`indexed_8bit_image` GLSL errors). Turn it on in the Displays panel when needed.
+
+If RViz still shows shader errors or blank image panels, launch with software OpenGL:
+
+```bash
+./launch_rviz_perception.sh --software
+# or: IGVC_RVIZ_SOFTWARE_GL=1 ./launch_rviz_perception.sh
+```
+
 ---
 
 ### Terminal 4 – Run Course
@@ -144,6 +153,16 @@ ros2 action list | grep navigate_to_pose
 
 # Odometry
 ros2 topic echo /fusion/odom --field pose.pose.position
+```
+
+**Forward / reverse:** Nav2 uses `base_footprint` as the robot base; it must match the model’s forward direction. In RViz, show TF for `base_footprint` and confirm the red (+X) axis points out the front of the chassis. The Ricardo model aligns `base_link` with `base_footprint` (no 180° fixed joint). If a script still expects the old default spawn, pass `spawn_yaw:=3.14159` to `orange_igvc_simple` or retune.
+
+**Lane-aware Nav2 (sim course):** Use `ros2 launch orange_gazebo igvc_perception_full.launch.xml` in one terminal and Gazebo in another so Nav2 subscribes to `/lane_cloud` and `/fused_scan` (see `nav2_params_fused.yaml`). Verify sources are live:
+
+```bash
+ros2 topic info /lane_cloud
+ros2 topic info /fused_scan
+# fused_cloud is published in base_link (same as lane_detector / fusion output_frame)
 ```
 
 ---

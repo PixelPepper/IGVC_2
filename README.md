@@ -124,6 +124,15 @@ source setup_orange.sh
 rviz2 -d igvc_perception.rviz
 ```
 
+The saved config keeps **Local Costmap** off by default (avoids `indexed_8bit_image` GLSL errors on some GPUs). Enable it in RViz under Displays if you need the costmap.
+
+If RViz still logs shader errors or fails to render images, use software OpenGL:
+
+```bash
+./launch_rviz_perception.sh --software
+# or: IGVC_RVIZ_SOFTWARE_GL=1 ./launch_rviz_perception.sh
+```
+
 **Terminal 4 – Run course**
 ```bash
 cd IGVC_2
@@ -181,10 +190,10 @@ IGVC_2/
 
 ## Configuration
 
-- **Waypoints**: Edit `navigate_igvc_course.py` (`self.waypoints`)
+- **Waypoints**: Edit `src/orange_ros2/orange_gazebo/config/waypoints/igvc_course_waypoints.yaml`
 - **Nav2 params**: `orange_gazebo/config/nav2_params_fused.yaml` (costmaps, inflation, goal tolerance)
 - **Lane detection**: `orange_perception` (HSV thresholds, morphological ops)
-- **Robot spawn**: `orange_igvc_simple.launch.py` (kills stale Gazebo, then XML stack; or use `.launch.xml` alone — it waits ~2s after clearing port 11345)
+- **Robot spawn**: `orange_igvc_simple.launch.py` (kills stale Gazebo, then XML stack; or use `.launch.xml` alone — it waits ~2s after clearing port 11345). Ricardo sim: `base_link` aligns with `base_footprint` (no extra yaw) so Nav2 forward matches the mesh. Override `spawn_yaw:=3.14159` if you need the initial body heading from older configs.
 
 ---
 
@@ -193,7 +202,9 @@ IGVC_2/
 | Issue | Solution |
 |-------|----------|
 | Gazebo window doesn't open | Run `DISPLAY=:0 gzclient &` in a separate terminal |
+| RViz `indexed_8bit_image` / sampler GLSL errors | Use `./launch_rviz_perception.sh --software` or enable Local Costmap only after RViz starts (costmap Map display is off by default) |
 | Lane detection shows 0 points | Check camera topic `/oak/rgb/image_raw`, adjust camera pitch/position |
+| Robot drives over lines despite lane overlay in RViz | Use `igvc_perception_full.launch.xml` (not Nav2 with `nav2_params_no_map` only). `igvc_nav2_full` defaults to `nav2_params_fused.yaml` when you need lane costmaps. |
 | Robot stuck at waypoint | Increase `xy_goal_tolerance` in `nav2_params_fused.yaml` |
 | Build errors | Run `rosdep install --from-paths src --ignore-src -r -y` |
 
