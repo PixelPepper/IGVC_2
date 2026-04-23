@@ -39,8 +39,8 @@ def generate_launch_description():
         [
             DeclareLaunchArgument(
                 'spawn_yaw',
-                default_value='0.0',
-                description='Initial robot yaw in rad for spawn_entity.py -Y (default 0; use ~3.14 to face -X in world).',
+                default_value='3.14159',
+                description='Initial robot yaw in rad for spawn_entity.py -Y (default ~pi, 180 deg; use spawn_yaw:=0.0 for previous heading).',
             ),
             kill_stale,
             RegisterEventHandler(

@@ -12,8 +12,8 @@
   <arg name="kill_stale_gazebo" default="true"/>
   <!-- Seconds to wait after optional kill before starting Gazebo stack; avoids racing the old server. .launch.py uses 0. -->
   <arg name="gazebo_stack_delay" default="2.0"/>
-  <!-- Initial yaw for spawn_entity.py -Y. Default 0 keeps prior net world pose (old URDF had base_link yaw pi + spawn pi). -->
-  <arg name="spawn_yaw" default="0.0"/>
+  <!-- Initial yaw for spawn_entity.py -Y. Default ~pi spawns the robot facing 180 deg from the previous 0 default; use spawn_yaw:=0.0 to override. -->
+  <arg name="spawn_yaw" default="3.14159"/>
 
   <!-- Standalone XML: kill leftovers, then start sim after delay. -->
   <executable

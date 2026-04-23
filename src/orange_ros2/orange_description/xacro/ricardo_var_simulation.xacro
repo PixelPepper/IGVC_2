@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
+<!-- Robot kinematics/meshes mirror $(find orange_description)/URDF/urdf/Ricardo_var.urdf (SolidWorks export); joint names/types adjusted for ROS2/Gazebo. -->
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="ricardo_var">
   <!--Gazebo: friction + diff drive + joint_state_publisher-->
   <xacro:include filename="$(find orange_description)/xacro/ricardo_var_simulation.gazebo"/>
