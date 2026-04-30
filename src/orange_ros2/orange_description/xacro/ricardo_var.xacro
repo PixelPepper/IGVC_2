@@ -1,28 +1,34 @@
 <?xml version="1.0"?>
-<!-- Robot kinematics/meshes mirror $(find orange_description)/URDF/urdf/Ricardo_var.urdf (SolidWorks export); joint names/types adjusted for ROS2/Gazebo. -->
+<!-- Kinematics/meshes aligned with $(find orange_description)/URDF/urdf/Ricardo_var.urdf; sensors/plugins use ricardo_var.gazebo + extras below. -->
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="ricardo_var">
-  <!--Gazebo: friction + diff drive + joint_state_publisher-->
-  <xacro:include filename="$(find orange_description)/xacro/ricardo_var_simulation.gazebo"/>
+  <!-- Gazebo: friction, diff drive, joint_state_publisher -->
+  <xacro:include filename="$(find orange_description)/xacro/ricardo_var.gazebo"/>
 
-  <!--2D LiDAR (Ricardo_var: first-pass mount; tune in RViz/Gazebo)-->
+  <!-- 2D LiDAR -->
   <xacro:include filename="$(find orange_description)/xacro/sensors/hokuyo.xacro"/>
   <xacro:sensor_hokuyo name="hokuyo" parent="base_link" min_angle="-1.22" max_angle="1.22" samples="720">
     <origin xyz="0.375 0.0 0.325" rpy="0.0 0.0 ${pi}"/>
   </xacro:sensor_hokuyo>
 
-  <!--IMU-->
+  <!-- 3D LiDAR (Velodyne-style macro in livox.xacro) -->
+  <xacro:include filename="$(find orange_description)/xacro/sensors/livox.xacro"/>
+  <xacro:sensor_livox name="livox_frame" parent="base_link" min_angle="-2.35619" max_angle="2.35619" samples="720">
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+  </xacro:sensor_livox>
+
+  <!-- IMU -->
   <xacro:include filename="$(find orange_description)/xacro/sensors/imu.xacro"/>
   <xacro:sensor_imu name="imu" parent="base_link" size="0.05 0.05 0.05">
-    <origin xyz="0.16 -0.06 0.0" rpy="0.0 0.0 ${pi}"/>
+    <origin xyz="-0.253 0.0 0.068" rpy="0.0 0.0 0.0"/>
   </xacro:sensor_imu>
 
-  <!--OAK-D Pro (first-pass mount)-->
+  <!-- OAK-D Pro -->
   <xacro:include filename="$(find orange_description)/xacro/sensors/oak_d_pro.xacro"/>
   <xacro:oak_d_pro name="oak" parent="base_link">
     <origin xyz="-0.175 0.0 0.825" rpy="0.0 0.2125 0.0"/>
   </xacro:oak_d_pro>
 
-  <!--base_footprint: z offset like orange_robot; no yaw. Model rotated 180 deg about Z: base_link +X is former -X (visual front along -X). Consider Nav2 / base_footprint when tuning.-->
+  <!-- Base footprint (same pattern as orange_robot.xacro) -->
   <link name="base_footprint"/>
   <joint name="base_joint" type="fixed">
     <parent link="base_footprint"/>
@@ -30,7 +36,6 @@
     <origin xyz="0.0 0.0 0.1015" rpy="0 0 0"/>
   </joint>
 
-  <!--SolidWorks export: links/joints with valid names, continuous wheels, fixed casters, mesh paths in orange_description-->
   <link name="base_link">
     <inertial>
       <origin xyz="0.159828508111213 -0.0620434630357985 -0.00127316885726741" rpy="0 0 0"/>

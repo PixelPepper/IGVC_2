@@ -13,7 +13,7 @@
   <arg name="imu_topic" default="/imu"/>
   <arg name="fusion_odom_topic" default="/fusion/odom"/>
   <arg name="world_file_path" default="$(find-pkg-share orange_gazebo)/worlds/orange_world.world"/>
-  <arg name="xacro_file_path" default="$(find-pkg-share orange_description)/xacro/orange_robot_simulation.xacro"/>
+  <arg name="xacro_file_path" default="$(find-pkg-share orange_description)/xacro/ricardo_var.xacro"/>
   <!-- ground_segmentation -->
   <include file="$(find-pkg-share orange_sensor_tools)/launch/ground_segmentation_simulation.launch.xml">
     <arg name="use_sim_time" value="$(var use_sim_time)"/>

@@ -6,14 +6,14 @@
   <arg name="imu_topic" default="/imu"/>
   <arg name="fusion_odom_topic" default="/fusion/odom"/>
   <arg name="world_file_path" default="$(find-pkg-share orange_gazebo)/worlds/orange_igvc.world"/>
-  <!-- Default: ricardo_var_simulation.xacro; override: orange_robot_simulation.xacro or other xacro -->
-  <arg name="xacro_file_path" default="$(find-pkg-share orange_description)/xacro/ricardo_var_simulation.xacro"/>
+  <!-- Default: ricardo_var.xacro; override via xacro_file_path (e.g. ricardo_var_simulation.xacro, orange_robot_simulation.xacro). -->
+  <arg name="xacro_file_path" default="$(find-pkg-share orange_description)/xacro/ricardo_var.xacro"/>
   <!-- If true, stop stray gzserver/gzclient (frees TCP 11345). orange_igvc_simple.launch.py sets this false and kills first. -->
   <arg name="kill_stale_gazebo" default="true"/>
   <!-- Seconds to wait after optional kill before starting Gazebo stack; avoids racing the old server. .launch.py uses 0. -->
   <arg name="gazebo_stack_delay" default="2.0"/>
-  <!-- Initial yaw for spawn_entity.py -Y. Default ~pi spawns the robot facing 180 deg from the previous 0 default; use spawn_yaw:=0.0 to override. -->
-  <arg name="spawn_yaw" default="3.14159"/>
+  <!-- Initial yaw for spawn_entity.py -Y. Default faces the first IGVC waypoint along +x. -->
+  <arg name="spawn_yaw" default="0.0"/>
 
   <!-- Standalone XML: kill leftovers, then start sim after delay. -->
   <executable
